@@ -19,15 +19,30 @@ class BaseModel(models.Model):
 
 class Company(BaseModel):
     coid = models.CharField(
-        db_column='COID', primary_key=True,
-        max_length=100)  # Field name made lowercase.
-    added = models.DateField(db_column='Added')  # Field name made lowercase.
+        verbose_name='Company ID',
+        help_text='Alphanumeric unique identifier for each company.',
+        db_column='COID',
+        primary_key=True,
+        max_length=100)
+    added = models.DateField(
+        verbose_name='Date added',
+        help_text='Date this company was added.',
+        blank=True,
+        auto_now_add=True,
+        db_column='Added')
     irsno = models.CharField(
-        db_column='IRSNo', max_length=100, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='IRS number',
+        db_column='IRSNo',
+        max_length=100,
+        blank=True,
+        null=True)
     name = models.CharField(
-        db_column='Company', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Name',
+        help_text='Full, official name of company',
+        db_column='Company',
+        max_length=200,
+        blank=True,
+        null=True)
     companytype = models.CharField(
         db_column='CompanyType', max_length=40, blank=True,
         null=True)  # Field name made lowercase.
