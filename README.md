@@ -21,6 +21,7 @@ A Django-powered interface for newsroom data at the Star Tribune.  Used for inte
 1.  `pipenv shell`
 1.  `pipenv install`
 1.  `python manage.py migrate && python manage.py migrate --database=datadrop_business`
+1.  `python manage.py collectstatic`
 
 ### Running locally
 
