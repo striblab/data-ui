@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from simple_history.models import HistoricalRecords
@@ -123,7 +123,7 @@ class Company(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Companies'
         verbose_name_plural = 'Companies'
 
@@ -159,7 +159,7 @@ class Employees(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Employees'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'Employees'
@@ -287,7 +287,7 @@ class Finances(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Finances'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'Finances'
@@ -354,7 +354,7 @@ class NonprofitFinances(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'NonProfit_Finances'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'NonProfit Finances'
@@ -401,7 +401,7 @@ class NonprofitSalary(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'NonProfit_Salaries'
         unique_together = (('officerid', 'publishyear'), )
         verbose_name_plural = 'NonProfit Salaries'
@@ -536,7 +536,7 @@ class OfficerSalary(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Officer_Salaries'
         unique_together = (('officerid', 'publishyear'), )
         verbose_name_plural = 'Officer Salaries'
@@ -604,6 +604,6 @@ class Officer(models.Model):
     #history = HistoricalRecords()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Officers'
         verbose_name_plural = 'Officers'
