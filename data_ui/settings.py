@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_history',
+    'import_export',
     'business_companies.apps.BusinessCompaniesConfig',
 ]
 

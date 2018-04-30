@@ -10,6 +10,7 @@ name = "pypi"
 django = "*"
 mysqlclient = "*"
 django-simple-history = "*"
+django-import-export = "*"
 
 
 [dev-packages]

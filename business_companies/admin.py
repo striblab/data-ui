@@ -1,9 +1,8 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
-
-# Register your models here.
 from .models import Company, Employees, Finances, NonprofitFinances, NonprofitSalary, OfficerSalary, Officer
 
+# Register models
 admin.site.register(Company, SimpleHistoryAdmin)
 admin.site.register(Employees, SimpleHistoryAdmin)
 admin.site.register(Finances, SimpleHistoryAdmin)

@@ -9,6 +9,14 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 
+# class BaseModel(models.Model):
+#     created_date = models.DateTimeField(auto_now_add=True)
+#     modified_date = models.DateTimeField(auto_now=True)
+#
+#     class Meta:
+#         abstract = True
+
+
 class Company(models.Model):
     coid = models.CharField(
         db_column='COID', primary_key=True,
@@ -112,7 +120,7 @@ class Company(models.Model):
         db_column='Footnotes', blank=True,
         null=True)  # Field name made lowercase.
 
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
 
     class Meta:
         managed = False
@@ -147,6 +155,8 @@ class Employees(models.Model):
         null=True)  # Field name made lowercase.
     notes = models.TextField(
         db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+
+    #history = HistoricalRecords()
 
     class Meta:
         managed = False
@@ -274,6 +284,8 @@ class Finances(models.Model):
         db_column='Footnotes', blank=True,
         null=True)  # Field name made lowercase.
 
+    #history = HistoricalRecords()
+
     class Meta:
         managed = False
         db_table = 'Finances'
@@ -339,6 +351,8 @@ class NonprofitFinances(models.Model):
         db_column='Footnotes', blank=True,
         null=True)  # Field name made lowercase.
 
+    #history = HistoricalRecords()
+
     class Meta:
         managed = False
         db_table = 'NonProfit_Finances'
@@ -383,6 +397,8 @@ class NonprofitSalary(models.Model):
         null=True)  # Field name made lowercase.
     notes = models.TextField(
         db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+
+    #history = HistoricalRecords()
 
     class Meta:
         managed = False
@@ -517,6 +533,8 @@ class OfficerSalary(models.Model):
     notes = models.TextField(
         db_column='Notes', blank=True, null=True)  # Field name made lowercase.
 
+    #history = HistoricalRecords()
+
     class Meta:
         managed = False
         db_table = 'Officer_Salaries'
@@ -582,6 +600,8 @@ class Officer(models.Model):
         null=True)  # Field name made lowercase.
     notes = models.TextField(
         db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+
+    #history = HistoricalRecords()
 
     class Meta:
         managed = False
