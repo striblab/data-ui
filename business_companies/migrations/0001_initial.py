@@ -38,6 +38,7 @@ class Migration(migrations.Migration):
                 ('contactemail', models.CharField(blank=True, db_column='ContactEmail', max_length=200, null=True)),
                 ('description', models.TextField(blank=True, db_column='Description', null=True)),
                 ('shortdesc', models.CharField(blank=True, db_column='ShortDesc', max_length=750, null=True)),
+                ('history', models.TextField(blank=True, db_column='History', null=True)),
                 ('founded', models.IntegerField(blank=True, db_column='Founded', null=True)),
                 ('inc', models.IntegerField(blank=True, db_column='Inc', null=True)),
                 ('incst', models.CharField(blank=True, db_column='IncSt', max_length=2, null=True)),
@@ -177,6 +178,7 @@ class Migration(migrations.Migration):
                 ('total', models.FloatField(blank=True, db_column='Total', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
+                ('officerid', models.ForeignKey(db_column='OfficerID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Officer')),
             ],
             options={
                 'verbose_name_plural': 'NonProfit Salaries',

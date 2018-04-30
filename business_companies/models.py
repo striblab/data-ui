@@ -9,15 +9,15 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 
-# class BaseModel(models.Model):
-#     created_date = models.DateTimeField(auto_now_add=True)
-#     modified_date = models.DateTimeField(auto_now=True)
-#
-#     class Meta:
-#         abstract = True
+class BaseModel(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    modified_date = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        abstract = True
 
 
-class Company(models.Model):
+class Company(BaseModel):
     coid = models.CharField(
         db_column='COID', primary_key=True,
         max_length=100)  # Field name made lowercase.
@@ -128,7 +128,7 @@ class Company(models.Model):
         verbose_name_plural = 'Companies'
 
 
-class Employees(models.Model):
+class Employees(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     added = models.DateField(db_column='Added')  # Field name made lowercase.
@@ -165,7 +165,7 @@ class Employees(models.Model):
         verbose_name_plural = 'Employees'
 
 
-class Finances(models.Model):
+class Finances(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     coid = models.ForeignKey(
@@ -293,7 +293,7 @@ class Finances(models.Model):
         verbose_name_plural = 'Finances'
 
 
-class NonprofitFinances(models.Model):
+class NonprofitFinances(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     coid = models.ForeignKey(
@@ -360,7 +360,7 @@ class NonprofitFinances(models.Model):
         verbose_name_plural = 'NonProfit Finances'
 
 
-class NonprofitSalary(models.Model):
+class NonprofitSalary(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     officerid = models.ForeignKey(
@@ -407,7 +407,7 @@ class NonprofitSalary(models.Model):
         verbose_name_plural = 'NonProfit Salaries'
 
 
-class OfficerSalary(models.Model):
+class OfficerSalary(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     officerid = models.ForeignKey(
@@ -542,7 +542,7 @@ class OfficerSalary(models.Model):
         verbose_name_plural = 'Officer Salaries'
 
 
-class Officer(models.Model):
+class Officer(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     coid = models.ForeignKey(
