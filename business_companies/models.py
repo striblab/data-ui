@@ -168,7 +168,7 @@ class Company(BaseModel):
         max_length=750,
         blank=True,
         null=True)
-    history = models.TextField(
+    companyhistory = models.TextField(
         verbose_name='Descriptive history',
         help_text='Descriptive history of company.',
         db_column='History',
