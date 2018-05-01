@@ -335,122 +335,208 @@ class Employees(BaseModel):
 
 class Finances(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
+        verbose_name='Financials ID',
+        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
     coid = models.ForeignKey(
-        Company, models.DO_NOTHING,
-        db_column='COID')  # Field name made lowercase.
+        Company,
+        models.DO_NOTHING,
+        verbose_name='Company',
+        help_text='Company associated with this record.',
+        db_column='COID')
     publishyear = models.IntegerField(
-        db_column='PublishYear')  # Field name made lowercase.
+        verbose_name='Publish year',
+        help_text='Year this data will be published.',
+        default=datetime.datetime.now().year,
+        db_column='PublishYear')
     customrank = models.IntegerField(
-        db_column='CustomRank', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Custom rank',
+        help_text='(Not needed) Override ranking by revenue or other number.',
+        db_column='CustomRank',
+        blank=True,
+        null=True)
     done = models.CharField(
-        db_column='Done', max_length=10, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Done',
+        help_text='(Not needed) Done for the year.',
+        db_column='Done',
+        max_length=10,
+        blank=True,
+        null=True)
     fye = models.DateField(
-        db_column='FYE', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Fiscal year end',
+        help_text='(Not needed?  See maxoffye) Fiscal year end.',
+        db_column='FYE',
+        blank=True,
+        null=True)
     maxoffye = models.DateField(
-        db_column='MaxOfFYE', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Fiscal year end',
+        help_text='Fiscal year end for the financial data.',
+        db_column='MaxOfFYE',
+        blank=True,
+        null=True)
     ceo = models.CharField(
-        db_column='CEO', max_length=300, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='CEO',
+        help_text='(Not needed, see Officers tables) CEO of the year.',
+        db_column='CEO',
+        max_length=300,
+        blank=True,
+        null=True)
     category = models.CharField(
-        db_column='Category', max_length=300, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Category',
+        help_text='(Not needed, see Company tables) Industry category of company.',
+        db_column='Category',
+        max_length=300,
+        blank=True,
+        null=True)
     revenue = models.FloatField(
-        db_column='Revenue', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Revenue',
+        db_column='Revenue',
+        blank=True,
+        null=True)
     ati = models.FloatField(
-        db_column='ATI', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='ATI',
+        help_text='Unsure?.',
+        db_column='ATI',
+        blank=True,
+        null=True)
     netincome = models.FloatField(
-        db_column='NetIncome', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Net income',
+        db_column='NetIncome',
+        blank=True,
+        null=True)
     earningspershare = models.FloatField(
-        db_column='EarningsPerShare', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Earnings per share',
+        db_column='EarningsPerShare',
+        blank=True,
+        null=True)
     totalassets = models.FloatField(
-        db_column='TotalAssets', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Total assets',
+        db_column='TotalAssets',
+        blank=True,
+        null=True)
     shareholdersequity = models.FloatField(
-        db_column='ShareholdersEquity', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Shareholders equity',
+        db_column='ShareholdersEquity',
+        blank=True,
+        null=True)
     debt = models.FloatField(
-        db_column='Debt', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Debt',
+        db_column='Debt',
+        blank=True,
+        null=True)
     shares = models.FloatField(
-        db_column='Shares', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Number of shares',
+        db_column='Shares',
+        blank=True,
+        null=True)
     totalemployees = models.IntegerField(
-        db_column='TotalEmployees', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Total employees',
+        help_text='(Not needed, see Employees tables) Number of total employees.',
+        db_column='TotalEmployees',
+        blank=True,
+        null=True)
     mnemployees = models.IntegerField(
-        db_column='MNEmployees', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='MN employees',
+        help_text='(Not needed, see Employees tables) Number of total employees in Minnesota.',
+        db_column='MNEmployees',
+        blank=True,
+        null=True)
     marketcap = models.FloatField(
-        db_column='MarketCap', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Market cap',
+        db_column='MarketCap',
+        blank=True,
+        null=True)
     empdate = models.DateField(
-        db_column='EMPDate', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Total employees date',
+        help_text='(Not needed, see Employees tables) Date total employees was recorded.',
+        db_column='EMPDate',
+        blank=True,
+        null=True)
     prevyearfye = models.DateField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearFYE', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearrevenue = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearRevenue', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearati = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearATI', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearnetincome = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearNetIncome', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearearnpershare = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearEarnPerShare', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyeartotalassets = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearTotalAssets', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearshareequity = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearShareEquity', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyeardebt = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearDebt', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearshares = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearShares', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyeartotalemp = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearTotalEmp', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearmnemp = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearMNEmp', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearmarketcap = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearMarketCap', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     prevyearclose = models.FloatField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearClose', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     customrankrevenue = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='CustomRankRevenue', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     customrankprofit = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='CustomRankProfit', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     customrankassets = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='CustomRankAssets', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     customrankmarketcap = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='CustomRankMarketCap', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     customrankblend = models.IntegerField(
+        help_text='(Not needed, see previous rows of data)',
         db_column='CustomRankBlend', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any internal notes about this company.',
+        db_column='Notes',
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
 
@@ -459,6 +545,7 @@ class Finances(BaseModel):
         db_table = 'Finances'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'Finances'
+        ordering = ['-publishyear', '-revenue', 'coid__name']
 
 
 class NonprofitFinances(BaseModel):

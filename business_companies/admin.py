@@ -86,10 +86,36 @@ class EmployeesAdmin(SimpleHistoryAdmin):
         }),
     )
 
+@admin.register(Finances)
+class FinancesAdmin(SimpleHistoryAdmin):
+    list_display = ('coid', 'publishyear', 'maxoffye', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
+    search_fields = ['coid__name', 'publishyear']
+    autocomplete_fields = ['coid']
+    fieldsets = (
+        (None, {
+            'fields': ('coid', 'publishyear', 'maxoffye')
+        }),
+        ('Financials', {
+            'description': 'All numbers should be full, base-10 values.  For example 4 billion needs to be 4000000000.',
+            'fields': ('revenue', 'ati', 'netincome', 'earningspershare', 'totalassets',
+            'shareholdersequity', 'debt', 'shares', 'marketcap'),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', ),
+        }),
+        ('Other', {
+            'classes': ('collapse',),
+            'fields': ('ceo', 'category', 'customrank', 'done'),
+        }),
+    )
+
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
 #admin.site.register(Employees, SimpleHistoryAdmin)
-admin.site.register(Finances, SimpleHistoryAdmin)
+#admin.site.register(Finances, SimpleHistoryAdmin)
 admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
 admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
 admin.site.register(OfficerSalary, SimpleHistoryAdmin)
