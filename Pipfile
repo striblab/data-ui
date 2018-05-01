@@ -11,6 +11,7 @@ django = "*"
 mysqlclient = "*"
 django-simple-history = "*"
 django-import-export = "*"
+sqlparse = "*"
 
 
 [dev-packages]

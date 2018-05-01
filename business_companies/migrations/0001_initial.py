@@ -14,6 +14,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunSQL(
+            "DELETE FROM Companies WHERE COID IS NULL OR COID = ''"
+        ),
         migrations.CreateModel(
             name='Company',
             fields=[

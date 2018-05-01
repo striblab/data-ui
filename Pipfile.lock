@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "301637e6e4009312acc48c9205cbdb8755b833f0e9beee2052316e45b039101a"
+            "sha256": "b130254efbd05f091ed149f4e7708f9c8f8a767731b98221bdb0eef9696554c1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -97,6 +97,13 @@
                 "sha256:e863072cdf4c72eebf179342c94e6989c67185842d9997960b3e69290b2fa269"
             ],
             "version": "==3.12"
+        },
+        "sqlparse": {
+            "hashes": [
+                "sha256:ce028444cfab83be538752a2ffdb56bc417b7784ff35bb9a3062413717807dec",
+                "sha256:d9cf190f51cbb26da0412247dfe4fb5f4098edb73db84e02f9fc21fdca31fed4"
+            ],
+            "version": "==0.2.4"
         },
         "tablib": {
             "hashes": [
