@@ -7,6 +7,12 @@ from .models import Company, Employees, Finances, NonprofitFinances, NonprofitSa
 
 # Customize inline admin interfaces
 # https://docs.djangoproject.com/en/2.0/ref/contrib/admin/#inlinemodeladmin-objects
+class CompanyInline(admin.TabularInline):
+    model = Company
+    extra = 0
+    show_change_link = True
+    fields = ('coid', 'name')
+
 class EmployeesInline(admin.TabularInline):
     model = Employees
     extra = 0
@@ -60,9 +66,29 @@ class CompanyAdmin(SimpleHistoryAdmin):
         }),
     )
 
+@admin.register(Employees)
+class EmployeesAdmin(SimpleHistoryAdmin):
+    list_display = ('coid', 'publishyear', 'added', 'total')
+    search_fields = ['coid__name', 'publishyear']
+    autocomplete_fields = ['coid']
+    fieldsets = (
+        (None, {
+            'fields': ('coid', 'added', 'publishyear')
+        }),
+        ('Employees', {
+            'fields': ('total', 'parttime', 'fulltime', 'union', 'minnesota'),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', ),
+        }),
+    )
+
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
-admin.site.register(Employees, SimpleHistoryAdmin)
+#admin.site.register(Employees, SimpleHistoryAdmin)
 admin.site.register(Finances, SimpleHistoryAdmin)
 admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
 admin.site.register(NonprofitSalary, SimpleHistoryAdmin)

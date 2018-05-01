@@ -248,39 +248,80 @@ class Company(BaseModel):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = True
         db_table = 'Companies'
         verbose_name_plural = 'Companies'
+        ordering = ['name']
 
 
 class Employees(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
-    added = models.DateField(db_column='Added')  # Field name made lowercase.
+        verbose_name='Employees ID',
+        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
+    added = models.DateField(
+        verbose_name='Date added',
+        help_text='The date this information was added.',
+        default=datetime.date.today,
+        db_column='Added')
     publishyear = models.IntegerField(
-        db_column='PublishYear')  # Field name made lowercase.
+        verbose_name='Publish year',
+        help_text='The calendar year this data will be published.',
+        default=datetime.datetime.now().year,
+        db_column='PublishYear')
     coid = models.ForeignKey(
-        Company, models.DO_NOTHING,
-        db_column='COID')  # Field name made lowercase.
+        Company,
+        models.DO_NOTHING,
+        verbose_name='Company',
+        help_text='The associated company with this data.',
+        db_column='COID')
     parttime = models.IntegerField(
-        db_column='PartTime', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Part-time',
+        help_text='Number of part-time employees',
+        db_column='PartTime',
+        blank=True,
+        null=True)
     fulltime = models.IntegerField(
-        db_column='FullTime', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Full time',
+        help_text='Number of full-time employees',
+        db_column='FullTime',
+        blank=True,
+        null=True)
     union = models.IntegerField(
-        db_column='Union', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Union',
+        help_text='Number of union employees',
+        db_column='Union',
+        blank=True,
+        null=True)
     total = models.IntegerField(
-        db_column='Total', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Total',
+        help_text='Total number of all employees.  This is the main number used in publication.',
+        db_column='Total',
+        blank=True,
+        null=True)
     minnesota = models.IntegerField(
-        db_column='Minnesota', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='MN employees',
+        help_text='Number of employees in Minnesota',
+        db_column='Minnesota',
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any internal notes about this company.',
+        db_column='Notes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
 
@@ -289,6 +330,7 @@ class Employees(BaseModel):
         db_table = 'Employees'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'Employees'
+        ordering = ['-publishyear', '-added', 'coid__name']
 
 
 class Finances(BaseModel):
