@@ -34,6 +34,31 @@ class CompanyAdmin(SimpleHistoryAdmin):
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
     inlines = [EmployeesInline, OfficerInline, FinancesInline]
+    fieldsets = (
+        (None, {
+            'fields': ('coid', 'added', 'name', 'alpha', 'irsno', 'stocksymbol', 'exchange')
+        }),
+        ('Grouping', {
+            #'classes': ('collapse',),
+            'fields': ('companytype', 'category'),
+        }),
+        ('About', {
+            'fields': ('description', 'companyhistory', 'shortdesc', 'founded', 'inc', 'incst',
+            'footnotes', 'annualmeet', 'fymonth', 'class_field'),
+        }),
+        ('References', {
+            'fields': ('seealso', 'seealsoid'),
+        }),
+        ('Address', {
+            'fields': ('address1', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'www'),
+        }),
+        ('Main contact', {
+            'fields': ('contact', 'contactphone', 'contactemail'),
+        }),
+        ('Internal', {
+            'fields': ('notes', 'enteredby'),
+        }),
+    )
 
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)

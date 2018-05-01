@@ -171,7 +171,7 @@ class Company(BaseModel):
     companyhistory = models.TextField(
         verbose_name='Descriptive history',
         help_text='Descriptive history of company.',
-        db_column='History',
+        db_column='CompanyHistory',
         blank=True,
         null=True)
     founded = models.IntegerField(

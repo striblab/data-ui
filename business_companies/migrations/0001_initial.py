@@ -17,6 +17,9 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             "DELETE FROM Companies WHERE COID IS NULL OR COID = ''"
         ),
+        migrations.RunSQL(
+            "ALTER TABLE Companies CHANGE `History` `CompanyHistory` TEXT"
+        ),
         migrations.CreateModel(
             name='Company',
             fields=[
@@ -41,7 +44,7 @@ class Migration(migrations.Migration):
                 ('contactemail', models.CharField(blank=True, db_column='ContactEmail', max_length=200, null=True)),
                 ('description', models.TextField(blank=True, db_column='Description', null=True)),
                 ('shortdesc', models.CharField(blank=True, db_column='ShortDesc', max_length=750, null=True)),
-                ('history', models.TextField(blank=True, db_column='History', null=True)),
+                ('companyhistory', models.TextField(blank=True, db_column='CompanyHistory', null=True)),
                 ('founded', models.IntegerField(blank=True, db_column='Founded', null=True)),
                 ('inc', models.IntegerField(blank=True, db_column='Inc', null=True)),
                 ('incst', models.CharField(blank=True, db_column='IncSt', max_length=2, null=True)),
