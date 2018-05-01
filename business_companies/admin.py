@@ -13,6 +13,18 @@ class EmployeesInline(admin.TabularInline):
     show_change_link = True
     fields = ('added', 'publishyear', 'parttime', 'fulltime', 'union', 'total', 'minnesota')
 
+class OfficerInline(admin.TabularInline):
+    model = Officer
+    extra = 0
+    show_change_link = True
+    fields = ('dropped', 'title', 'first', 'last')
+
+class FinancesInline(admin.TabularInline):
+    model = Finances
+    extra = 0
+    show_change_link = True
+    fields = ('publishyear', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
+
 # Customize main admin interface for Company
 @admin.register(Company)
 class CompanyAdmin(SimpleHistoryAdmin):
@@ -21,7 +33,7 @@ class CompanyAdmin(SimpleHistoryAdmin):
     list_filter = ('category', 'companytype')
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
-    inlines = [EmployeesInline]
+    inlines = [EmployeesInline, OfficerInline, FinancesInline]
 
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)

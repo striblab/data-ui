@@ -44,96 +44,207 @@ class Company(BaseModel):
         blank=True,
         null=True)
     companytype = models.CharField(
-        db_column='CompanyType', max_length=40, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Type',
+        help_text='General type of company.  This is an unstandardized field.',
+        db_column='CompanyType',
+        max_length=40,
+        blank=True,
+        null=True)
     category = models.CharField(
-        db_column='Category', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Industry category',
+        help_text='Industry category; (so far) mostly used for non-profit companies.',
+        db_column='Category',
+        max_length=200,
+        blank=True,
+        null=True)
     alpha = models.CharField(
-        db_column='Alpha', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Sort name',
+        help_text='The alphabetical sorting name used for this company.',
+        db_column='Alpha',
+        max_length=200,
+        blank=True,
+        null=True)
     seealso = models.CharField(
-        db_column='SeeAlso', max_length=100, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='See also',
+        help_text='Descriptive reference for a related company.',
+        db_column='SeeAlso',
+        max_length=100,
+        blank=True,
+        null=True)
     seealsoid = models.ForeignKey(
         'self',
         models.DO_NOTHING,
+        verbose_name='See also company',
+        help_text='The company ID to any related reference.',
         db_column='SeeAlsoID',
         blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     address1 = models.CharField(
-        db_column='Address1', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Address (line 1)',
+        db_column='Address1',
+        max_length=200,
+        blank=True,
+        null=True)
     address2 = models.CharField(
-        db_column='Address2', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Address (line 2)',
+        db_column='Address2',
+        max_length=200,
+        blank=True,
+        null=True)
     city = models.CharField(
-        db_column='City', max_length=100, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='City',
+        help_text='City for address.',
+        db_column='City',
+        max_length=100,
+        blank=True,
+        null=True)
     state = models.CharField(
-        db_column='State', max_length=2, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='State',
+        help_text='State for address; please use the postal abbreviation, such as "MN".',
+        db_column='State',
+        max_length=2,
+        blank=True,
+        null=True)
     zip = models.CharField(
-        db_column='Zip', max_length=20, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Zipcode',
+        help_text='Zipcode for address.',
+        db_column='Zip',
+        max_length=20,
+        blank=True,
+        null=True)
     phone = models.CharField(
-        db_column='Phone', max_length=30, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Phone number',
+        help_text='General phone number for company (see Contact Phone for specific contact phone number).',
+        db_column='Phone',
+        max_length=30,
+        blank=True,
+        null=True)
     fax = models.CharField(
-        db_column='Fax', max_length=30, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Fax number',
+        help_text='General fax number for company.',
+        db_column='Fax',
+        max_length=30,
+        blank=True,
+        null=True)
     www = models.CharField(
-        db_column='WWW', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Website',
+        help_text='URL of website for company.',
+        db_column='WWW',
+        max_length=200,
+        blank=True,
+        null=True)
     contact = models.CharField(
-        db_column='Contact', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Contact person',
+        help_text='Name of main contact person.',
+        db_column='Contact',
+        max_length=200,
+        blank=True,
+        null=True)
     contactphone = models.CharField(
-        db_column='ContactPhone', max_length=30, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Contact phone',
+        help_text='Phone number of main contact person.',
+        db_column='ContactPhone',
+        max_length=30,
+        blank=True,
+        null=True)
+    # TODO: EmailField
     contactemail = models.CharField(
-        db_column='ContactEmail', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Contact email',
+        help_text='Email address of main contact person.',
+        db_column='ContactEmail',
+        max_length=200,
+        blank=True,
+        null=True)
     description = models.TextField(
-        db_column='Description', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Company description',
+        help_text='Full description of company.',
+        db_column='Description',
+        blank=True,
+        null=True)
     shortdesc = models.CharField(
-        db_column='ShortDesc', max_length=750, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Short description',
+        help_text='Short, one or two sentence, description of company.',
+        db_column='ShortDesc',
+        max_length=750,
+        blank=True,
+        null=True)
     history = models.TextField(
-        db_column='History', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Descriptive history',
+        help_text='Descriptive history of company.',
+        db_column='History',
+        blank=True,
+        null=True)
     founded = models.IntegerField(
-        db_column='Founded', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Year founded',
+        help_text='Year company was founded.',
+        db_column='Founded',
+        blank=True,
+        null=True)
     inc = models.IntegerField(
-        db_column='Inc', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Year incorporated',
+        help_text='Year company was incorporated.',
+        db_column='Inc',
+        blank=True,
+        null=True)
     incst = models.CharField(
-        db_column='IncSt', max_length=2, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='State incorporated',
+        help_text='The state the company was incorporated in.  Please use the two character postal abbreviation, such as "MN".',
+        db_column='IncSt',
+        max_length=2,
+        blank=True,
+        null=True)
     stocksymbol = models.CharField(
-        db_column='StockSymbol', max_length=12, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Stock symbol',
+        help_text='Stock symbol used on exchanges.',
+        db_column='StockSymbol',
+        max_length=12,
+        blank=True,
+        null=True)
     exchange = models.CharField(
-        db_column='Exchange', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Stock exchange',
+        help_text='Primary exchange that the company is traded on.  This is an unstandardized field.',
+        db_column='Exchange',
+        max_length=50,
+        blank=True,
+        null=True)
     annualmeet = models.CharField(
-        db_column='AnnualMeet', max_length=30, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Annual meeting',
+        help_text='About the annual meeting.',
+        db_column='AnnualMeet',
+        max_length=30,
+        blank=True,
+        null=True)
     fymonth = models.IntegerField(
-        db_column='FYMonth', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Fiscal year end month',
+        help_text='The number month of the fiscal year end of the company.  Such as 1 for January.',
+        db_column='FYMonth',
+        blank=True,
+        null=True)
+    # TODO: This could/is handled by django
     enteredby = models.CharField(
+        verbose_name='Data entered by',
+        help_text='Who was the staff person that last entered this data.',
         db_column='EnteredBy', max_length=30, blank=True,
         null=True)  # Field name made lowercase.
     class_field = models.CharField(
-        db_column='Class', max_length=10, blank=True, null=True
-    )  # Field name made lowercase. Field renamed because it was a Python reserved word.
+        verbose_name='Class',
+        help_text='An integer describing the class of the company.  (Unknown what this is)',
+        db_column='Class',
+        max_length=10,
+        blank=True,
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any internal notes about this company.',
+        db_column='Notes',
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
 
