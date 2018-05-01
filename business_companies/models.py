@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from simple_history.models import HistoricalRecords
+import datetime
 
 
 class BaseModel(models.Model):
@@ -27,8 +28,7 @@ class Company(BaseModel):
     added = models.DateField(
         verbose_name='Date added',
         help_text='Date this company was added.',
-        blank=True,
-        auto_now_add=True,
+        default=datetime.date.today,
         db_column='Added')
     irsno = models.CharField(
         verbose_name='IRS number',
