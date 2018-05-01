@@ -87,11 +87,6 @@ class Migration(migrations.Migration):
             field=models.TextField(blank=True, db_column='CompanyHistory', help_text='Descriptive history of company.', null=True, verbose_name='Descriptive history'),
         ),
         migrations.AlterField(
-            model_name='historicalcompany',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
             model_name='historicalemployees',
             name='added',
             field=models.DateField(db_column='Added', default=datetime.date.today, help_text='The date this information was added.', verbose_name='Date added'),
@@ -105,11 +100,6 @@ class Migration(migrations.Migration):
             model_name='historicalemployees',
             name='fulltime',
             field=models.IntegerField(blank=True, db_column='FullTime', help_text='Number of full-time employees', null=True, verbose_name='Full time'),
-        ),
-        migrations.AlterField(
-            model_name='historicalemployees',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='historicalemployees',
@@ -145,30 +135,5 @@ class Migration(migrations.Migration):
             model_name='historicalemployees',
             name='union',
             field=models.IntegerField(blank=True, db_column='Union', help_text='Number of union employees', null=True, verbose_name='Union'),
-        ),
-        migrations.AlterField(
-            model_name='historicalfinances',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='historicalnonprofitfinances',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='historicalnonprofitsalary',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='historicalofficer',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='historicalofficersalary',
-            name='history_user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL),
         ),
     ]
