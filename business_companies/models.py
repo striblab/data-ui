@@ -799,62 +799,127 @@ class OfficerSalary(BaseModel):
 
 class Officer(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
+        verbose_name='Officer ID',
+        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
     coid = models.ForeignKey(
-        Company, models.DO_NOTHING,
-        db_column='COID')  # Field name made lowercase.
+        Company,
+        models.DO_NOTHING,
+        verbose_name='Company',
+        help_text='Company associated with this record.',
+        db_column='COID')
+    # TODO: Change to boolean field
     dropped = models.IntegerField(
-        db_column='Dropped', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Is dropped',
+        help_text='True (1) or False (0) on whether this person is no longer with company and should not show up in publication.',
+        db_column='Dropped',
+        blank=True,
+        null=True)
     salut = models.CharField(
+        verbose_name='Salut',
+        help_text='Name prefix',
         db_column='Salut', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     first = models.CharField(
-        db_column='First', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='First name',
+        db_column='First',
+        max_length=200,
+        blank=True,
+        null=True)
     middle = models.CharField(
-        db_column='Middle', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Middle name',
+        db_column='Middle',
+        max_length=50,
+        blank=True,
+        null=True)
     last = models.CharField(
-        db_column='Last', max_length=200)  # Field name made lowercase.
+        verbose_name='Last name',
+        db_column='Last',
+        max_length=200)
     lineage = models.CharField(
-        db_column='Lineage', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Lineage suffix',
+        help_text='Name suffix or lineage.',
+        db_column='Lineage',
+        max_length=50,
+        blank=True,
+        null=True)
     degree = models.CharField(
-        db_column='Degree', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Degree suffix',
+        help_text='Degree suffix such as "M.D.".',
+        db_column='Degree',
+        max_length=50,
+        blank=True,
+        null=True)
     gender = models.CharField(
-        db_column='Gender', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Gender',
+        help_text='Gender as either M, F, or blank',
+        db_column='Gender',
+        max_length=50,
+        blank=True,
+        null=True)
     race = models.CharField(
-        db_column='Race', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Race',
+        help_text='This field is not standardized or consistenly used so is probably not a reliable field for publication.',
+        db_column='Race',
+        max_length=50,
+        blank=True,
+        null=True)
     title = models.CharField(
-        db_column='Title', max_length=110, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Title',
+        help_text='The current title of the officer.',
+        db_column='Title',
+        max_length=110,
+        blank=True,
+        null=True)
     director = models.IntegerField(
-        db_column='Director', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Is director',
+        help_text='True (1) or False (0) whether this person is a director.',
+        db_column='Director',
+        blank=True,
+        null=True)
     birthday = models.DateField(
-        db_column='Birthday', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Birthday',
+        db_column='Birthday',
+        blank=True,
+        null=True)
     tenure = models.CharField(
-        db_column='Tenure', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Tenure',
+        help_text='Year this officer joined the company.',
+        db_column='Tenure',
+        max_length=200,
+        blank=True,
+        null=True)
     phone = models.CharField(
-        db_column='Phone', max_length=30, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Phone number',
+        db_column='Phone',
+        max_length=30,
+        blank=True,
+        null=True)
     email = models.CharField(
-        db_column='Email', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Email',
+        db_column='Email',
+        max_length=200,
+        blank=True,
+        null=True)
     twitter = models.CharField(
-        db_column='Twitter', max_length=200, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Twitter handle',
+        db_column='Twitter',
+        max_length=200,
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any internal notes about this company.',
+        db_column='Notes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
 
@@ -862,3 +927,4 @@ class Officer(BaseModel):
         managed = True
         db_table = 'Officers'
         verbose_name_plural = 'Officers'
+        ordering = ['dropped', 'coid__name', 'last']

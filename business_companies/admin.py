@@ -31,6 +31,12 @@ class FinancesInline(admin.TabularInline):
     show_change_link = True
     fields = ('publishyear', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
 
+class OfficerSalaryInline(admin.TabularInline):
+    model = OfficerSalary
+    extra = 0
+    show_change_link = True
+    fields = ('publishyear', 'salary', 'total')
+
 # Customize main admin interface for Company
 @admin.register(Company)
 class CompanyAdmin(SimpleHistoryAdmin):
@@ -112,6 +118,36 @@ class FinancesAdmin(SimpleHistoryAdmin):
         }),
     )
 
+@admin.register(Officer)
+class OfficerAdmin(SimpleHistoryAdmin):
+    list_display = ('coid', 'dropped', 'title', 'last', 'first')
+    search_fields = ['coid__name', 'title', 'last', 'first']
+    autocomplete_fields = ['coid']
+    inlines = [OfficerSalaryInline]
+    fieldsets = (
+        (None, {
+            'fields': ('coid', 'dropped')
+        }),
+        ('Name', {
+            'fields': ('salut', 'first', 'middle', 'last', 'lineage', 'degree'),
+        }),
+        ('Position', {
+            'fields': ('title', 'director', 'tenure'),
+        }),
+        ('Demographics', {
+            'fields': ('gender', 'race', 'birthday'),
+        }),
+        ('Contact', {
+            'fields': ('phone', 'email', 'twitter'),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', ),
+        }),
+    )
+
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
 #admin.site.register(Employees, SimpleHistoryAdmin)
@@ -119,4 +155,4 @@ class FinancesAdmin(SimpleHistoryAdmin):
 admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
 admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
 admin.site.register(OfficerSalary, SimpleHistoryAdmin)
-admin.site.register(Officer, SimpleHistoryAdmin)
+#admin.site.register(Officer, SimpleHistoryAdmin)
