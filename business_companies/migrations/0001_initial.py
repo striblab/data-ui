@@ -22,6 +22,10 @@ class Migration(migrations.Migration):
             "DELETE FROM Employees WHERE ID = 5711"
         ),
         migrations.RunSQL(
+            # Can't do this with dates, as 0000-00-00 is not valid
+            "DELETE FROM Officer_Salaries WHERE ID = 12313"
+        ),
+        migrations.RunSQL(
             "ALTER TABLE Companies CHANGE `History` `CompanyHistory` TEXT"
         ),
         migrations.CreateModel(
