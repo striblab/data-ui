@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
                 ('class_field', models.CharField(blank=True, db_column='Class', max_length=10, null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
-                ('seealsoid', models.ForeignKey(blank=True, db_column='SeeAlsoID', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company')),
+                ('seealsoid', models.ForeignKey(blank=True, db_column='SeeAlsoID', null=True, on_delete=django.db.models.deletion.SET_NULL, to='business_companies.Company')),
             ],
             options={
                 'verbose_name_plural': 'Companies',
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
                 ('minnesota', models.IntegerField(blank=True, db_column='Minnesota', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
-                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company')),
+                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Company')),
             ],
             options={
                 'verbose_name_plural': 'Employees',
@@ -136,7 +136,7 @@ class Migration(migrations.Migration):
                 ('customrankblend', models.IntegerField(blank=True, db_column='CustomRankBlend', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
-                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company')),
+                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Company')),
             ],
             options={
                 'verbose_name_plural': 'Finances',
@@ -167,7 +167,7 @@ class Migration(migrations.Migration):
                 ('inputsource', models.CharField(blank=True, db_column='InputSource', max_length=512, null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
-                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company')),
+                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Company')),
             ],
             options={
                 'verbose_name_plural': 'NonProfit Finances',
@@ -192,7 +192,7 @@ class Migration(migrations.Migration):
                 ('total', models.FloatField(blank=True, db_column='Total', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
-                ('officerid', models.ForeignKey(db_column='OfficerID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Officer')),
+                ('officerid', models.ForeignKey(db_column='OfficerID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Officer')),
             ],
             options={
                 'verbose_name_plural': 'NonProfit Salaries',
@@ -222,7 +222,7 @@ class Migration(migrations.Migration):
                 ('twitter', models.CharField(blank=True, db_column='Twitter', max_length=200, null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
-                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company')),
+                ('coid', models.ForeignKey(db_column='COID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Company')),
             ],
             options={
                 'verbose_name_plural': 'Officers',
@@ -277,7 +277,7 @@ class Migration(migrations.Migration):
                 ('medianemployeepay', models.FloatField(blank=True, db_column='MedianEmployeePay', null=True)),
                 ('footnotes', models.TextField(blank=True, db_column='Footnotes', null=True)),
                 ('notes', models.TextField(blank=True, db_column='Notes', null=True)),
-                ('officerid', models.ForeignKey(db_column='OfficerID', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Officer')),
+                ('officerid', models.ForeignKey(db_column='OfficerID', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Officer')),
             ],
             options={
                 'verbose_name_plural': 'Officer Salaries',

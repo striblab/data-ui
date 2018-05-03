@@ -73,7 +73,7 @@ class Company(BaseModel):
         null=True)
     seealsoid = models.ForeignKey(
         'self',
-        models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         verbose_name='See also company',
         help_text='The company ID to any related reference.',
         db_column='SeeAlsoID',
@@ -276,7 +276,7 @@ class Employees(BaseModel):
         db_column='PublishYear')
     coid = models.ForeignKey(
         Company,
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='The associated company with this data.',
         db_column='COID')
@@ -347,7 +347,7 @@ class Finances(BaseModel):
         primary_key=True)
     coid = models.ForeignKey(
         Company,
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='Company associated with this record.',
         db_column='COID')
@@ -564,7 +564,7 @@ class NonprofitFinances(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     coid = models.ForeignKey(
-        Company, models.DO_NOTHING,
+        Company, on_delete=models.CASCADE,
         db_column='COID')  # Field name made lowercase.
     added = models.DateField(db_column='Added')  # Field name made lowercase.
     publishyear = models.IntegerField(
@@ -631,7 +631,7 @@ class NonprofitSalary(BaseModel):
     id = models.AutoField(
         db_column='ID', primary_key=True)  # Field name made lowercase.
     officerid = models.ForeignKey(
-        'Officer', models.DO_NOTHING,
+        'Officer', on_delete=models.CASCADE,
         db_column='OfficerID')  # Field name made lowercase.
     added = models.DateField(db_column='Added')  # Field name made lowercase.
     publishyear = models.IntegerField(
@@ -682,7 +682,7 @@ class OfficerSalary(BaseModel):
         primary_key=True)
     officerid = models.ForeignKey(
         'Officer',
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Officer',
         help_text='The related officer record.',
         db_column='OfficerID')
@@ -956,7 +956,7 @@ class Officer(BaseModel):
         primary_key=True)
     coid = models.ForeignKey(
         Company,
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='Company associated with this record.',
         db_column='COID')
