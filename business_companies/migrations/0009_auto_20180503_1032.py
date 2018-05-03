@@ -330,7 +330,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='officersalary',
             name='officerid',
-            field=models.ForeignKey(db_column='OfficerID', help_text='The related officer record.', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Officer', verbose_name='Officer'),
+            field=models.ForeignKey(db_column='OfficerID', help_text='The related officer record.', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Officer', verbose_name='Officer'),
         ),
         migrations.AlterField(
             model_name='officersalary',

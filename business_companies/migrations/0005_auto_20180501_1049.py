@@ -151,7 +151,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='company',
             name='seealsoid',
-            field=models.ForeignKey(blank=True, db_column='SeeAlsoID', help_text='The company ID to any related reference.', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company', verbose_name='See also company'),
+            field=models.ForeignKey(blank=True, db_column='SeeAlsoID', help_text='The company ID to any related reference.', null=True, on_delete=django.db.models.deletion.SET_NULL, to='business_companies.Company', verbose_name='See also company'),
         ),
         migrations.AlterField(
             model_name='company',

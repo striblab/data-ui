@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='finances',
             name='coid',
-            field=models.ForeignKey(db_column='COID', help_text='Company associated with this record.', on_delete=django.db.models.deletion.DO_NOTHING, to='business_companies.Company', verbose_name='Company'),
+            field=models.ForeignKey(db_column='COID', help_text='Company associated with this record.', on_delete=django.db.models.deletion.CASCADE, to='business_companies.Company', verbose_name='Company'),
         ),
         migrations.AlterField(
             model_name='finances',
