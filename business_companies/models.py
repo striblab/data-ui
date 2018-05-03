@@ -325,6 +325,12 @@ class Employees(BaseModel):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        # Easier way to do this?
+        return '%s employees: %s' % (
+            '' if self.publishyear is None else self.publishyear,
+            self.coid.name)
+
     class Meta:
         managed = True
         db_table = 'Employees'
@@ -539,6 +545,12 @@ class Finances(BaseModel):
         null=True)
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        # Easier way to do this?
+        return '%s finances: %s' % (
+            '' if self.publishyear is None else self.publishyear,
+            self.coid.name)
 
     class Meta:
         managed = True

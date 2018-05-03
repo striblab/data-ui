@@ -74,7 +74,7 @@ class CompanyAdmin(SimpleHistoryAdmin):
 
 @admin.register(Employees)
 class EmployeesAdmin(SimpleHistoryAdmin):
-    list_display = ('coid', 'publishyear', 'added', 'total')
+    list_display = ('id', 'coid', 'publishyear', 'added', 'total')
     search_fields = ['coid__name', 'publishyear']
     autocomplete_fields = ['coid']
     fieldsets = (
@@ -94,7 +94,7 @@ class EmployeesAdmin(SimpleHistoryAdmin):
 
 @admin.register(Finances)
 class FinancesAdmin(SimpleHistoryAdmin):
-    list_display = ('coid', 'publishyear', 'maxoffye', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
+    list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
     search_fields = ['coid__name', 'publishyear']
     autocomplete_fields = ['coid']
     fieldsets = (
