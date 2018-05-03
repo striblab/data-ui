@@ -123,7 +123,6 @@ class OfficerAdmin(SimpleHistoryAdmin):
     list_display = ('coid', 'dropped', 'title', 'last', 'first')
     search_fields = ['coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
-    inlines = [OfficerSalaryInline]
     fieldsets = (
         (None, {
             'fields': ('coid', 'dropped')
@@ -148,11 +147,45 @@ class OfficerAdmin(SimpleHistoryAdmin):
         }),
     )
 
+@admin.register(OfficerSalary)
+class OfficerSalaryAdmin(SimpleHistoryAdmin):
+    list_display = ('id', 'publishyear', 'officerid', 'salary')
+    search_fields = ['publishyear', 'officerid__coid__name', 'officerid__title', 'officerid__last', 'officerid__first']
+    autocomplete_fields = ['officerid']
+    #inlines = [OfficerInline]
+    fieldsets = (
+        (None, {
+            'fields': ('officerid', 'added', 'publishyear', 'fiscalyearend',
+                'salarystatus', 'fullyear')
+        }),
+        ('Salary', {
+            'fields': ('salary', 'bonus', 'bonussalary', 'stockoptions', 'stockoptionsvalue',
+                'othertotal', 'allothertotal', 'extratotal', 'stockexpense', 'restricted',
+                'performance', 'longtermtotal', 'optionsexercisablevalue', 'optionsunexercisablevalue',
+                'totalltequitysct', 'totalsb', 'total', 'stockaward', 'optionaward',
+                'nonequityipc', 'sharesvesting', 'ylabel', 'sayonpay'),
+        }),
+        ('Employees', {
+            'fields': ('ceopayratio', 'medianemployeepay'),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', ),
+        }),
+        ('Other', {
+            'classes': ('collapse',),
+            'fields': ('salarychange', 'bonuschange', 'longtermchange', 'nr', 'flag',
+                'totalsbchange', 'totalchange', 'stockchange', 'pensionchange'),
+        }),
+    )
+
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
 #admin.site.register(Employees, SimpleHistoryAdmin)
 #admin.site.register(Finances, SimpleHistoryAdmin)
 admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
 admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
-admin.site.register(OfficerSalary, SimpleHistoryAdmin)
+#admin.site.register(OfficerSalary, SimpleHistoryAdmin)
 #admin.site.register(Officer, SimpleHistoryAdmin)

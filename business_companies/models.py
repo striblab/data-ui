@@ -664,129 +664,259 @@ class NonprofitSalary(BaseModel):
 
 class OfficerSalary(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
+        verbose_name='Officer Salary ID',
+        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
     officerid = models.ForeignKey(
-        'Officer', models.DO_NOTHING,
-        db_column='OfficerID')  # Field name made lowercase.
-    added = models.DateField(db_column='Added')  # Field name made lowercase.
+        'Officer',
+        models.DO_NOTHING,
+        verbose_name='Officer',
+        help_text='The related officer record.',
+        db_column='OfficerID')
+    added = models.DateField(
+        verbose_name='Added',
+        help_text='Date added.',
+        db_column='Added')
     publishyear = models.IntegerField(
-        db_column='PublishYear')  # Field name made lowercase.
+        verbose_name='Publish year',
+        help_text='Year this record is used for publishing.',
+        db_column='PublishYear')
     title = models.CharField(
-        db_column='Title', max_length=100, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Officer title',
+        help_text='(Deprecated, see Officer record)',
+        db_column='Title',
+        max_length=100,
+        blank=True,
+        null=True)
     ceo = models.IntegerField(
-        db_column='CEO', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Is CEO',
+        help_text='(Deprecated, see Officer record) True (1) or False (0) on whether this is a CEO or not.',
+        db_column='CEO',
+        blank=True,
+        null=True)
     fiscalyearend = models.DateField(
-        db_column='FiscalYearEnd')  # Field name made lowercase.
+        verbose_name='Fiscal year end',
+        help_text='Date of the fiscal year end.',
+        db_column='FiscalYearEnd')
     salarystatus = models.CharField(
-        db_column='SalaryStatus', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Status',
+        help_text='(Unsure what is used for)',
+        db_column='SalaryStatus',
+        max_length=50,
+        blank=True,
+        null=True)
     salary = models.FloatField(
-        db_column='Salary', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Base salary',
+        help_text='Base salary for officer.',
+        db_column='Salary',
+        blank=True,
+        null=True)
     salarychange = models.FloatField(
-        db_column='SalaryChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, managed in previous records)',
+        db_column='SalaryChange',
+        blank=True,
+        null=True)
     bonus = models.FloatField(
-        db_column='Bonus', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Bonus',
+        db_column='Bonus',
+        blank=True,
+        null=True)
     bonuschange = models.FloatField(
-        db_column='BonusChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, managed in previous records)',
+        db_column='BonusChange',
+        blank=True,
+        null=True)
     bonussalary = models.FloatField(
-        db_column='BonusSalary', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Subtotal: Bonus and salary',
+        help_text='(Deprecated, calculated)',
+        db_column='BonusSalary',
+        blank=True,
+        null=True)
     stockoptions = models.FloatField(
-        db_column='StockOptions', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Stock options',
+        help_text='Number of stock options.',
+        db_column='StockOptions',
+        blank=True,
+        null=True)
     stockoptionsvalue = models.FloatField(
-        db_column='StockOptionsValue', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Value of stock options',
+        help_text='Value of stock options.',
+        db_column='StockOptionsValue',
+        blank=True,
+        null=True)
     othertotal = models.FloatField(
-        db_column='OtherTotal', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Other total',
+        help_text='(Unsure?)',
+        db_column='OtherTotal',
+        blank=True,
+        null=True)
     allothertotal = models.FloatField(
-        db_column='AllOtherTotal', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='All other total',
+        help_text='(Unsure?)',
+        db_column='AllOtherTotal',
+        blank=True,
+        null=True)
     extratotal = models.FloatField(
-        db_column='ExtraTotal', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Extra total',
+        help_text='(Unsure?)',
+        db_column='ExtraTotal',
+        blank=True,
+        null=True)
     stockexpense = models.FloatField(
-        db_column='StockExpense', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Stock expenses',
+        help_text='(Unsure?)',
+        db_column='StockExpense',
+         blank=True,
+        null=True)
     restricted = models.FloatField(
-        db_column='Restricted', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Restricted',
+        help_text='(Unsure?)',
+        db_column='Restricted',
+        blank=True,
+        null=True)
     performance = models.FloatField(
-        db_column='Performance', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Performance',
+        help_text='(Unsure?)',
+        db_column='Performance',
+        blank=True,
+        null=True)
     longtermtotal = models.FloatField(
-        db_column='LongTermTotal', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Long term total',
+        help_text='(Unsure?)',
+        db_column='LongTermTotal',
+        blank=True,
+        null=True)
     longtermchange = models.FloatField(
-        db_column='LongTermChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, calculated)',
+        db_column='LongTermChange',
+        blank=True,
+        null=True)
     optionsexercisablevalue = models.FloatField(
-        db_column='OptionsExercisableValue', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Options exercisable value',
+        db_column='OptionsExercisableValue',
+        blank=True,
+        null=True)
     optionsunexercisablevalue = models.FloatField(
-        db_column='OptionsUnexercisableValue', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Options unexercisable value',
+        db_column='OptionsUnexercisableValue',
+        blank=True,
+        null=True)
     nr = models.IntegerField(
-        db_column='NR', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='NR',
+        help_text='(Unsure?)',
+        db_column='NR',
+        blank=True,
+        null=True)
     flag = models.IntegerField(
-        db_column='Flag', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Flag',
+        help_text='(Unsure?)',
+        db_column='Flag',
+        blank=True,
+        null=True)
     totalltequitysct = models.FloatField(
-        db_column='TotalLTEquitySCT', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Total LT equity SCT',
+        help_text='(Unsure?)',
+        db_column='TotalLTEquitySCT',
+        blank=True,
+        null=True)
     totalsb = models.FloatField(
-        db_column='TotalSB', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Total SB',
+        help_text='(Unsure?)',
+        db_column='TotalSB',
+        blank=True,
+        null=True)
     totalsbchange = models.FloatField(
-        db_column='TotalSBChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, calculated)',
+        db_column='TotalSBChange',
+        blank=True,
+        null=True)
     total = models.FloatField(
-        db_column='Total', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Total pay',
+        help_text='(Unsure?  Should be calculated?)',
+        db_column='Total',
+        blank=True,
+        null=True)
     totalchange = models.FloatField(
-        db_column='TotalChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, calculated)',
+        db_column='TotalChange',
+        blank=True,
+        null=True)
     fullyear = models.IntegerField(
-        db_column='FullYear', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Is full year',
+        help_text='True (1) or False (0) whether this data is for the full fiscal year.',
+        db_column='FullYear',
+        blank=True,
+        null=True)
     stockchange = models.FloatField(
-        db_column='StockChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, calculated)',
+        db_column='StockChange',
+        blank=True,
+        null=True)
     stockaward = models.FloatField(
-        db_column='StockAward', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Stock awards',
+        help_text='(Unsure?)',
+        db_column='StockAward',
+        blank=True,
+        null=True)
     optionaward = models.FloatField(
-        db_column='OptionAward', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Option awards',
+        help_text='(Unsure?)',
+        db_column='OptionAward',
+        blank=True,
+        null=True)
     nonequityipc = models.FloatField(
-        db_column='NonEquityIPC', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Non-equity IPC',
+        help_text='(Unsure?)',
+        db_column='NonEquityIPC',
+        blank=True,
+        null=True)
     pensionchange = models.FloatField(
-        db_column='PensionChange', blank=True,
-        null=True)  # Field name made lowercase.
+        help_text='(Deprecated, calculated)',
+        db_column='PensionChange',
+        blank=True,
+        null=True)
     sharesvesting = models.FloatField(
-        db_column='SharesVesting', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Shares vesting',
+        help_text='(Unsure?)',
+        db_column='SharesVesting',
+        blank=True,
+        null=True)
     ylabel = models.IntegerField(
-        db_column='YLabel', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Y Label',
+        help_text='(Unsure?)',
+        db_column='YLabel',
+        blank=True,
+        null=True)
     sayonpay = models.FloatField(
-        db_column='SayOnPay', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Say on pay',
+        help_text='(Unsure?)',
+        db_column='SayOnPay',
+        blank=True,
+        null=True)
     ceopayratio = models.FloatField(
-        db_column='CEOPayRatio', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='CEO pay ratio',
+        help_text='Ratio of CEO to (average?) employee pay.',
+        db_column='CEOPayRatio',
+        blank=True,
+        null=True)
     medianemployeepay = models.FloatField(
-        db_column='MedianEmployeePay', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Median employee pay',
+        db_column='MedianEmployeePay',
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any internal notes about this company.',
+        db_column='Notes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
 
@@ -922,6 +1052,15 @@ class Officer(BaseModel):
         null=True)
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        # Easier way to do this?
+        return '%s %s %s, %s, %s' % (
+            '' if self.first is None else self.first,
+            '' if self.middle is None else self.middle,
+            self.last,
+            '' if self.title is None else self.title,
+            self.coid.name)
 
     class Meta:
         managed = True
