@@ -920,11 +920,20 @@ class OfficerSalary(BaseModel):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        # Easier way to do this?
+        return '%s salary: %s, %s, %s' % (
+            '' if self.publishyear is None else self.publishyear,
+            '' if self.officerid.last is None else self.officerid.last,
+            '' if self.officerid.title is None else self.officerid.title,
+            self.officerid.coid.name)
+
     class Meta:
         managed = True
         db_table = 'Officer_Salaries'
         unique_together = (('officerid', 'publishyear'), )
         verbose_name_plural = 'Officer Salaries'
+        ordering = ['-publishyear', 'officerid__coid__name', 'officerid__last']
 
 
 class Officer(BaseModel):

@@ -120,9 +120,10 @@ class FinancesAdmin(SimpleHistoryAdmin):
 
 @admin.register(Officer)
 class OfficerAdmin(SimpleHistoryAdmin):
-    list_display = ('coid', 'dropped', 'title', 'last', 'first')
+    list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first')
     search_fields = ['coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
+    inlines = [OfficerSalaryInline]
     fieldsets = (
         (None, {
             'fields': ('coid', 'dropped')
