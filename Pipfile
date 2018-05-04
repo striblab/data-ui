@@ -17,6 +17,7 @@ sqlparse = "*"
 [dev-packages]
 
 pylint = "*"
+yapf = "*"
 
 
 [requires]
