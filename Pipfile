@@ -16,6 +16,7 @@ sqlparse = "*"
 
 [dev-packages]
 
+pylint = "*"
 
 
 [requires]
