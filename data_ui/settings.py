@@ -11,18 +11,30 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Utilize environment variables for overrides, and allow to read
+# a .env file
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, '!=%!i_1n@y4=b8)^!rbn+x^(5coz1li!86n^hbg2=^3pzoi34z'),
+    DEFAULT_DB_URI=(str, 'sqlite:///{}'.format(
+        os.path.join(BASE_DIR, 'db.sqlite3'))),
+    TIME_ZONE=(str, 'America/Chicago'),
+    STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static-assets')))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!=%!i_1n@y4=b8)^!rbn+x^(5coz1li!86n^hbg2=^3pzoi34z'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -73,13 +85,8 @@ WSGI_APPLICATION = 'data_ui.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = {'default': env.db('DEFAULT_DB_URI')}
+DATABASES['datadrop_business'] = env.db('DATADROP_BUSINESS_DB_URI')
 
 DATABASE_ROUTERS = [
     'business_companies.routers.BusinessCompaniesRouter',
@@ -113,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 #TIME_ZONE = 'UTC'
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = env('TIME_ZONE')
 
 USE_I18N = True
 
@@ -123,12 +130,5 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATIC_URL = '/static/'
-
-
-# Import local settings
-try:
-   from settings_local import *
-except ImportError:
-    raise Exception("A settings_local.py file is required to run this project")
+STATIC_ROOT = env('STATIC_ROOT')
