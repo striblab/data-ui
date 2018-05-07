@@ -5,7 +5,9 @@ services:
     image: postgres
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    environment:
+      DEFAULT_DB_URI: postgres://postgres:@db:5432/postgres
+    command: ["./deploy/wait-for-it.sh", "db:5432", "--", "./deploy/entrypoint.sh"]
     volumes:
       - .:/code
     ports:
