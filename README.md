@@ -30,6 +30,7 @@ Settings that are unique to the environment are managed with environment variabl
 
 1.  `pipenv shell`
 1.  `pipenv install`
+1.  For first time setup, create an admin user: `python manage.py createsuperuser`
 1.  `python manage.py migrate && python manage.py migrate --database=datadrop_business`
 1.  `python manage.py collectstatic`
 
@@ -79,4 +80,4 @@ Some helpful commands
 
 To create the first admin user, you will need to connect to the Docker image.
 
-1.
+1.  `docker-compose run web python manage.py createsuperuser`
