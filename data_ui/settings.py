@@ -24,7 +24,9 @@ env = environ.Env(
     DEFAULT_DB_URI=(str, 'sqlite:///{}'.format(
         os.path.join(BASE_DIR, 'db.sqlite3'))),
     TIME_ZONE=(str, 'America/Chicago'),
-    STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static-assets')))
+    STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static-assets')),
+    ALLOWED_HOSTS=(list, []),
+    STATIC_URL=(str, '/static/'))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
@@ -36,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -130,5 +132,5 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-STATIC_URL = '/static/'
+STATIC_URL = env('STATIC_URL')
 STATIC_ROOT = env('STATIC_ROOT')
