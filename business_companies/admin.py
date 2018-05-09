@@ -29,7 +29,7 @@ class FinancesInline(admin.TabularInline):
     model = Finances
     extra = 0
     show_change_link = True
-    fields = ('publishyear', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
+    fields = ('publishyear', 'revenue', 'netincomebeforeextra', 'netincome', 'marketcap', 'totalassets')
 
 class OfficerSalaryInline(admin.TabularInline):
     model = OfficerSalary
@@ -94,7 +94,7 @@ class EmployeesAdmin(SimpleHistoryAdmin):
 
 @admin.register(Finances)
 class FinancesAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue', 'ati', 'netincome', 'marketcap', 'totalassets')
+    list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue', 'netincomebeforeextra', 'netincome', 'marketcap', 'totalassets')
     search_fields = ['coid__name', 'publishyear']
     autocomplete_fields = ['coid']
     fieldsets = (
@@ -103,7 +103,7 @@ class FinancesAdmin(SimpleHistoryAdmin):
         }),
         ('Financials', {
             'description': 'All numbers should be full, base-10 values.  For example 4 billion needs to be 4000000000.',
-            'fields': ('revenue', 'ati', 'netincome', 'earningspershare', 'totalassets',
+            'fields': ('revenue', 'ati', 'netincomebeforeextra', 'netincome', 'earningspershare', 'totalassets',
             'shareholdersequity', 'debt', 'shares', 'marketcap'),
         }),
         ('About', {

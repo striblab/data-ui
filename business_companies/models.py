@@ -411,6 +411,11 @@ class Finances(BaseModel):
         db_column='NetIncome',
         blank=True,
         null=True)
+    netincomebeforeextra = models.FloatField(
+        verbose_name='Net income before extraordinary items',
+        db_column='NetIncomeBeforeExtra',
+        blank=True,
+        null=True)
     earningspershare = models.FloatField(
         verbose_name='Earnings per share',
         db_column='EarningsPerShare',
@@ -474,6 +479,12 @@ class Finances(BaseModel):
     prevyearnetincome = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
         db_column='PrevYearNetIncome', blank=True,
+        null=True)
+    prevyearnetincomebeforeextra = models.FloatField(
+        verbose_name='Previous year: Net income before extraordinary items',
+        help_text='(Not needed, see previous rows of data)',
+        db_column='PrevYearNetIncomeBE',
+        blank=True,
         null=True)
     prevyearearnpershare = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
