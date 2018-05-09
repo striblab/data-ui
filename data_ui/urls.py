@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import RedirectView
 
 # Update some variables in the admin
 admin.site.site_header = 'Data UI'
@@ -22,4 +23,5 @@ admin.site.site_title = 'Star Tribune Data UI'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='admin/'))
 ]
