@@ -5,6 +5,7 @@ from .models import Company, Employees, Finances, NonprofitFinances, NonprofitSa
 # Referenence
 # https://docs.djangoproject.com/en/2.0/ref/contrib/admin/
 
+
 # Customize inline admin interfaces
 # https://docs.djangoproject.com/en/2.0/ref/contrib/admin/#inlinemodeladmin-objects
 class CompanyInline(admin.TabularInline):
@@ -13,11 +14,14 @@ class CompanyInline(admin.TabularInline):
     show_change_link = True
     fields = ('coid', 'name')
 
+
 class EmployeesInline(admin.TabularInline):
     model = Employees
     extra = 0
     show_change_link = True
-    fields = ('added', 'publishyear', 'parttime', 'fulltime', 'union', 'total', 'minnesota')
+    fields = ('added', 'publishyear', 'parttime', 'fulltime', 'union', 'total',
+              'minnesota')
+
 
 class OfficerInline(admin.TabularInline):
     model = Officer
@@ -25,11 +29,14 @@ class OfficerInline(admin.TabularInline):
     show_change_link = True
     fields = ('dropped', 'title', 'first', 'last')
 
+
 class FinancesInline(admin.TabularInline):
     model = Finances
     extra = 0
     show_change_link = True
-    fields = ('publishyear', 'revenue', 'netincomebeforeextra', 'netincome', 'marketcap', 'totalassets')
+    fields = ('publishyear', 'revenue', 'netincomebeforeextra', 'netincome',
+              'marketcap', 'totalassets')
+
 
 class OfficerSalaryInline(admin.TabularInline):
     model = OfficerSalary
@@ -37,32 +44,39 @@ class OfficerSalaryInline(admin.TabularInline):
     show_change_link = True
     fields = ('publishyear', 'salary', 'total')
 
+
 # Customize main admin interface for Company
 @admin.register(Company)
 class CompanyAdmin(SimpleHistoryAdmin):
     #date_hierarchy = 'modified_date'
-    list_display = ('coid', 'name', 'stocksymbol', 'category', 'companytype', 'shortdesc')
+    list_display = ('coid', 'name', 'stocksymbol', 'category', 'companytype',
+                    'shortdesc')
     list_filter = ('category', 'companytype')
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
     inlines = [EmployeesInline, OfficerInline, FinancesInline]
     fieldsets = (
         (None, {
-            'fields': ('coid', 'added', 'name', 'alpha', 'irsno', 'stocksymbol', 'exchange')
+            'fields': ('coid', 'added', 'name', 'alpha', 'irsno',
+                       'stocksymbol', 'exchange')
         }),
-        ('Grouping', {
-            #'classes': ('collapse',),
-            'fields': ('companytype', 'category'),
-        }),
+        (
+            'Grouping',
+            {
+                #'classes': ('collapse',),
+                'fields': ('companytype', 'category'),
+            }),
         ('About', {
-            'fields': ('description', 'companyhistory', 'shortdesc', 'founded', 'inc', 'incst',
-            'footnotes', 'annualmeet', 'fymonth', 'class_field'),
+            'fields':
+            ('description', 'companyhistory', 'shortdesc', 'founded', 'inc',
+             'incst', 'footnotes', 'annualmeet', 'fymonth', 'class_field'),
         }),
         ('References', {
             'fields': ('seealso', 'seealsoid'),
         }),
         ('Address', {
-            'fields': ('address1', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'www'),
+            'fields': ('address1', 'address2', 'city', 'state', 'zip', 'phone',
+                       'fax', 'www'),
         }),
         ('Main contact', {
             'fields': ('contact', 'contactphone', 'contactemail'),
@@ -72,9 +86,11 @@ class CompanyAdmin(SimpleHistoryAdmin):
         }),
     )
 
+
 @admin.register(Employees)
 class EmployeesAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'coid', 'publishyear', 'added', 'total')
+    list_filter = ('publishyear', )
     search_fields = ['coid__name', 'publishyear']
     autocomplete_fields = ['coid']
     fieldsets = (
@@ -92,9 +108,13 @@ class EmployeesAdmin(SimpleHistoryAdmin):
         }),
     )
 
+
 @admin.register(Finances)
 class FinancesAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue', 'netincomebeforeextra', 'netincome', 'marketcap', 'totalassets')
+    list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue',
+                    'netincomebeforeextra', 'netincome', 'marketcap',
+                    'totalassets')
+    list_filter = ('publishyear', )
     search_fields = ['coid__name', 'publishyear']
     autocomplete_fields = ['coid']
     fieldsets = (
@@ -102,9 +122,11 @@ class FinancesAdmin(SimpleHistoryAdmin):
             'fields': ('coid', 'publishyear', 'maxoffye')
         }),
         ('Financials', {
-            'description': 'All numbers should be full, base-10 values.  For example 4 billion needs to be 4000000000.',
-            'fields': ('revenue', 'ati', 'netincomebeforeextra', 'netincome', 'earningspershare', 'totalassets',
-            'shareholdersequity', 'debt', 'shares', 'marketcap'),
+            'description':
+            'All numbers should be full, base-10 values.  For example 4 billion needs to be 4000000000.',
+            'fields': ('revenue', 'ati', 'netincomebeforeextra', 'netincome',
+                       'earningspershare', 'totalassets', 'shareholdersequity',
+                       'debt', 'shares', 'marketcap'),
         }),
         ('About', {
             'fields': ('footnotes', ),
@@ -113,14 +135,16 @@ class FinancesAdmin(SimpleHistoryAdmin):
             'fields': ('notes', ),
         }),
         ('Other', {
-            'classes': ('collapse',),
+            'classes': ('collapse', ),
             'fields': ('ceo', 'category', 'customrank', 'done'),
         }),
     )
 
+
 @admin.register(Officer)
 class OfficerAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first')
+    list_filter = ('dropped', )
     search_fields = ['coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
     inlines = [OfficerSalaryInline]
@@ -129,7 +153,8 @@ class OfficerAdmin(SimpleHistoryAdmin):
             'fields': ('coid', 'dropped')
         }),
         ('Name', {
-            'fields': ('salut', 'first', 'middle', 'last', 'lineage', 'degree'),
+            'fields': ('salut', 'first', 'middle', 'last', 'lineage',
+                       'degree'),
         }),
         ('Position', {
             'fields': ('title', 'director', 'tenure'),
@@ -148,23 +173,31 @@ class OfficerAdmin(SimpleHistoryAdmin):
         }),
     )
 
+
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'publishyear', 'officerid', 'salary')
-    search_fields = ['publishyear', 'officerid__coid__name', 'officerid__title', 'officerid__last', 'officerid__first']
+    list_filter = ('publishyear', )
+    search_fields = [
+        'publishyear', 'officerid__coid__name', 'officerid__title',
+        'officerid__last', 'officerid__first'
+    ]
     autocomplete_fields = ['officerid']
     #inlines = [OfficerInline]
     fieldsets = (
         (None, {
             'fields': ('officerid', 'added', 'publishyear', 'fiscalyearend',
-                'salarystatus', 'fullyear')
+                       'salarystatus', 'fullyear')
         }),
         ('Salary', {
-            'fields': ('salary', 'bonus', 'bonussalary', 'stockoptions', 'stockoptionsvalue',
-                'othertotal', 'allothertotal', 'extratotal', 'stockexpense', 'restricted',
-                'performance', 'longtermtotal', 'optionsexercisablevalue', 'optionsunexercisablevalue',
-                'totalltequitysct', 'totalsb', 'total', 'stockaward', 'optionaward',
-                'nonequityipc', 'sharesvesting', 'ylabel', 'sayonpay'),
+            'fields':
+            ('salary', 'bonus', 'bonussalary', 'stockoptions',
+             'stockoptionsvalue', 'othertotal', 'allothertotal', 'extratotal',
+             'stockexpense', 'restricted', 'performance', 'longtermtotal',
+             'optionsexercisablevalue', 'optionsunexercisablevalue',
+             'totalltequitysct', 'totalsb', 'total', 'stockaward',
+             'optionaward', 'nonequityipc', 'sharesvesting', 'ylabel',
+             'sayonpay'),
         }),
         ('Employees', {
             'fields': ('ceopayratio', 'medianemployeepay'),
@@ -176,11 +209,13 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
             'fields': ('notes', ),
         }),
         ('Other', {
-            'classes': ('collapse',),
-            'fields': ('salarychange', 'bonuschange', 'longtermchange', 'nr', 'flag',
-                'totalsbchange', 'totalchange', 'stockchange', 'pensionchange'),
+            'classes': ('collapse', ),
+            'fields':
+            ('salarychange', 'bonuschange', 'longtermchange', 'nr', 'flag',
+             'totalsbchange', 'totalchange', 'stockchange', 'pensionchange'),
         }),
     )
+
 
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
