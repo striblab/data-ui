@@ -11,8 +11,16 @@ import datetime
 
 
 class BaseModel(models.Model):
-    created_date = models.DateTimeField(auto_now_add=True, null=True)
-    modified_date = models.DateTimeField(auto_now=True, null=True)
+    created_date = models.DateTimeField(
+        auto_now_add=True, 
+        null=True,
+        verbose_name='Created date',
+        help_text='The date this record was created.',)
+    modified_date = models.DateTimeField(
+        auto_now=True, 
+        null=True,
+        verbose_name='Modified date',
+        help_text='The date this record was last modified.',)
 
     class Meta:
         abstract = True
