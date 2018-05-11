@@ -55,6 +55,7 @@ class CompanyAdmin(SimpleHistoryAdmin):
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
     inlines = [EmployeesInline, OfficerInline, FinancesInline]
+    readonly_fields = ('created_date', 'modified_date')
     fieldsets = (
         (None, {
             'fields': ('coid', 'added', 'name', 'alpha', 'irsno',
@@ -82,18 +83,19 @@ class CompanyAdmin(SimpleHistoryAdmin):
             'fields': ('contact', 'contactphone', 'contactemail'),
         }),
         ('Internal', {
-            'fields': ('notes', 'enteredby'),
+            'fields': ('notes', 'enteredby', 'created_date', 'modified_date'),
         }),
     )
 
 
 @admin.register(Employees)
 class EmployeesAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'publishyear', 'added', 'total', 'modified_date')
+    list_display = ('id', 'coid', 'publishyear', 'added', 'total',
+                    'modified_date')
     list_filter = ('publishyear', )
     search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
-    readonly_fields = ('id', )
+    readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
             'fields': ('id', 'coid', 'added', 'publishyear')
@@ -105,7 +107,7 @@ class EmployeesAdmin(SimpleHistoryAdmin):
             'fields': ('footnotes', ),
         }),
         ('Internal', {
-            'fields': ('notes', ),
+            'fields': ('notes', 'created_date', 'modified_date'),
         }),
     )
 
@@ -118,7 +120,7 @@ class FinancesAdmin(SimpleHistoryAdmin):
     list_filter = ('publishyear', )
     search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
-    readonly_fields = ('id', )
+    readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
             'fields': ('id', 'coid', 'publishyear', 'maxoffye')
@@ -134,7 +136,7 @@ class FinancesAdmin(SimpleHistoryAdmin):
             'fields': ('footnotes', ),
         }),
         ('Internal', {
-            'fields': ('notes', ),
+            'fields': ('notes', 'created_date', 'modified_date'),
         }),
         ('Other', {
             'classes': ('collapse', ),
@@ -151,7 +153,7 @@ class OfficerAdmin(SimpleHistoryAdmin):
     search_fields = ['id', 'coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
     inlines = [OfficerSalaryInline]
-    readonly_fields = ('id', )
+    readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
             'fields': ('id', 'coid', 'dropped')
@@ -173,7 +175,7 @@ class OfficerAdmin(SimpleHistoryAdmin):
             'fields': ('footnotes', ),
         }),
         ('Internal', {
-            'fields': ('notes', ),
+            'fields': ('notes', 'created_date', 'modified_date'),
         }),
     )
 
@@ -189,7 +191,7 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
     ]
     autocomplete_fields = ['officerid']
     #inlines = [OfficerInline]
-    readonly_fields = ('id', )
+    readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
             'fields': ('id', 'officerid', 'added', 'publishyear',
@@ -212,7 +214,7 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
             'fields': ('footnotes', ),
         }),
         ('Internal', {
-            'fields': ('notes', ),
+            'fields': ('notes', 'created_date', 'modified_date'),
         }),
         ('Other', {
             'classes': ('collapse', ),
