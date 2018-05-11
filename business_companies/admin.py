@@ -42,7 +42,7 @@ class OfficerSalaryInline(admin.TabularInline):
     model = OfficerSalary
     extra = 0
     show_change_link = True
-    fields = ('publishyear', 'salary', 'total')
+    fields = ('publishyear', 'title', 'salary', 'total')
 
 
 # Customize main admin interface for Company
@@ -147,10 +147,10 @@ class FinancesAdmin(SimpleHistoryAdmin):
 
 @admin.register(Officer)
 class OfficerAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first',
-                    'modified_date')
+    # Using title from salary table
+    list_display = ('id', 'coid', 'dropped', 'last', 'first', 'modified_date')
     list_filter = ('dropped', )
-    search_fields = ['id', 'coid__name', 'title', 'last', 'first']
+    search_fields = ['id', 'coid__name', 'last', 'first']
     autocomplete_fields = ['coid']
     inlines = [OfficerSalaryInline]
     readonly_fields = ('id', 'created_date', 'modified_date')
@@ -161,9 +161,6 @@ class OfficerAdmin(SimpleHistoryAdmin):
         ('Name', {
             'fields': ('salut', 'first', 'middle', 'last', 'lineage',
                        'degree'),
-        }),
-        ('Position', {
-            'fields': ('title', 'director', 'tenure'),
         }),
         ('Demographics', {
             'fields': ('gender', 'race', 'birthday'),
@@ -177,17 +174,21 @@ class OfficerAdmin(SimpleHistoryAdmin):
         ('Internal', {
             'fields': ('notes', 'created_date', 'modified_date'),
         }),
+        ('Other', {
+            'classes': ('collapse', ),
+            'fields': ('title', 'director', 'tenure'),
+        }),
     )
 
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'salary',
+    list_display = ('id', 'publishyear', 'officerid', 'title', 'salary',
                     'modified_date')
     list_filter = ('publishyear', )
     search_fields = [
-        'publishyear', 'officerid__coid__name', 'officerid__title',
-        'officerid__last', 'officerid__first'
+        'publishyear', 'officerid__coid__name', 'title', 'officerid__last',
+        'officerid__first'
     ]
     autocomplete_fields = ['officerid']
     #inlines = [OfficerInline]
@@ -196,6 +197,9 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
         (None, {
             'fields': ('id', 'officerid', 'added', 'publishyear',
                        'fiscalyearend', 'salarystatus', 'fullyear')
+        }),
+        ('Officer', {
+            'fields': ('title', ),
         }),
         ('Salary', {
             'fields':

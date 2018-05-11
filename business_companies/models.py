@@ -12,15 +12,17 @@ import datetime
 
 class BaseModel(models.Model):
     created_date = models.DateTimeField(
-        auto_now_add=True, 
+        auto_now_add=True,
         null=True,
         verbose_name='Created date',
-        help_text='The date this record was created.',)
+        help_text='The date this record was created.',
+    )
     modified_date = models.DateTimeField(
-        auto_now=True, 
+        auto_now=True,
         null=True,
         verbose_name='Modified date',
-        help_text='The date this record was last modified.',)
+        help_text='The date this record was last modified.',
+    )
 
     class Meta:
         abstract = True
@@ -60,7 +62,8 @@ class Company(BaseModel):
         null=True)
     category = models.CharField(
         verbose_name='Industry category',
-        help_text='Industry category; (so far) mostly used for non-profit companies.',
+        help_text=
+        'Industry category; (so far) mostly used for non-profit companies.',
         db_column='Category',
         max_length=200,
         blank=True,
@@ -108,7 +111,8 @@ class Company(BaseModel):
         null=True)
     state = models.CharField(
         verbose_name='State',
-        help_text='State for address; please use the postal abbreviation, such as "MN".',
+        help_text=
+        'State for address; please use the postal abbreviation, such as "MN".',
         db_column='State',
         max_length=2,
         blank=True,
@@ -122,7 +126,8 @@ class Company(BaseModel):
         null=True)
     phone = models.CharField(
         verbose_name='Phone number',
-        help_text='General phone number for company (see Contact Phone for specific contact phone number).',
+        help_text=
+        'General phone number for company (see Contact Phone for specific contact phone number).',
         db_column='Phone',
         max_length=30,
         blank=True,
@@ -196,7 +201,8 @@ class Company(BaseModel):
         null=True)
     incst = models.CharField(
         verbose_name='State incorporated',
-        help_text='The state the company was incorporated in.  Please use the two character postal abbreviation, such as "MN".',
+        help_text=
+        'The state the company was incorporated in.  Please use the two character postal abbreviation, such as "MN".',
         db_column='IncSt',
         max_length=2,
         blank=True,
@@ -210,7 +216,8 @@ class Company(BaseModel):
         null=True)
     exchange = models.CharField(
         verbose_name='Stock exchange',
-        help_text='Primary exchange that the company is traded on.  This is an unstandardized field.',
+        help_text=
+        'Primary exchange that the company is traded on.  This is an unstandardized field.',
         db_column='Exchange',
         max_length=50,
         blank=True,
@@ -224,7 +231,8 @@ class Company(BaseModel):
         null=True)
     fymonth = models.IntegerField(
         verbose_name='Fiscal year end month',
-        help_text='The number month of the fiscal year end of the company.  Such as 1 for January.',
+        help_text=
+        'The number month of the fiscal year end of the company.  Such as 1 for January.',
         db_column='FYMonth',
         blank=True,
         null=True)
@@ -232,11 +240,14 @@ class Company(BaseModel):
     enteredby = models.CharField(
         verbose_name='Data entered by',
         help_text='Who was the staff person that last entered this data.',
-        db_column='EnteredBy', max_length=30, blank=True,
+        db_column='EnteredBy',
+        max_length=30,
+        blank=True,
         null=True)  # Field name made lowercase.
     class_field = models.CharField(
         verbose_name='Class',
-        help_text='An integer describing the class of the company.  (Unknown what this is)',
+        help_text=
+        'An integer describing the class of the company.  (Unknown what this is)',
         db_column='Class',
         max_length=10,
         blank=True,
@@ -269,7 +280,8 @@ class Company(BaseModel):
 class Employees(BaseModel):
     id = models.AutoField(
         verbose_name='Employees ID',
-        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
         db_column='ID',
         primary_key=True)
     added = models.DateField(
@@ -308,7 +320,8 @@ class Employees(BaseModel):
         null=True)
     total = models.IntegerField(
         verbose_name='Total',
-        help_text='Total number of all employees.  This is the main number used in publication.',
+        help_text=
+        'Total number of all employees.  This is the main number used in publication.',
         db_column='Total',
         blank=True,
         null=True)
@@ -336,8 +349,8 @@ class Employees(BaseModel):
     def __str__(self):
         # Easier way to do this?
         return '%s employees: %s' % (
-            '' if self.publishyear is None else self.publishyear,
-            self.coid.name)
+            ''
+            if self.publishyear is None else self.publishyear, self.coid.name)
 
     class Meta:
         managed = True
@@ -350,7 +363,8 @@ class Employees(BaseModel):
 class Finances(BaseModel):
     id = models.AutoField(
         verbose_name='Financials ID',
-        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
         db_column='ID',
         primary_key=True)
     coid = models.ForeignKey(
@@ -398,16 +412,14 @@ class Finances(BaseModel):
         null=True)
     category = models.CharField(
         verbose_name='Category',
-        help_text='(Not needed, see Company tables) Industry category of company.',
+        help_text=
+        '(Not needed, see Company tables) Industry category of company.',
         db_column='Category',
         max_length=300,
         blank=True,
         null=True)
     revenue = models.FloatField(
-        verbose_name='Revenue',
-        db_column='Revenue',
-        blank=True,
-        null=True)
+        verbose_name='Revenue', db_column='Revenue', blank=True, null=True)
     ati = models.FloatField(
         verbose_name='ATI',
         help_text='Unsure?.',
@@ -440,10 +452,7 @@ class Finances(BaseModel):
         blank=True,
         null=True)
     debt = models.FloatField(
-        verbose_name='Debt',
-        db_column='Debt',
-        blank=True,
-        null=True)
+        verbose_name='Debt', db_column='Debt', blank=True, null=True)
     shares = models.FloatField(
         verbose_name='Number of shares',
         db_column='Shares',
@@ -451,13 +460,15 @@ class Finances(BaseModel):
         null=True)
     totalemployees = models.IntegerField(
         verbose_name='Total employees',
-        help_text='(Not needed, see Employees tables) Number of total employees.',
+        help_text=
+        '(Not needed, see Employees tables) Number of total employees.',
         db_column='TotalEmployees',
         blank=True,
         null=True)
     mnemployees = models.IntegerField(
         verbose_name='MN employees',
-        help_text='(Not needed, see Employees tables) Number of total employees in Minnesota.',
+        help_text=
+        '(Not needed, see Employees tables) Number of total employees in Minnesota.',
         db_column='MNEmployees',
         blank=True,
         null=True)
@@ -468,25 +479,30 @@ class Finances(BaseModel):
         null=True)
     empdate = models.DateField(
         verbose_name='Total employees date',
-        help_text='(Not needed, see Employees tables) Date total employees was recorded.',
+        help_text=
+        '(Not needed, see Employees tables) Date total employees was recorded.',
         db_column='EMPDate',
         blank=True,
         null=True)
     prevyearfye = models.DateField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearFYE', blank=True,
+        db_column='PrevYearFYE',
+        blank=True,
         null=True)
     prevyearrevenue = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearRevenue', blank=True,
+        db_column='PrevYearRevenue',
+        blank=True,
         null=True)
     prevyearati = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearATI', blank=True,
+        db_column='PrevYearATI',
+        blank=True,
         null=True)
     prevyearnetincome = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearNetIncome', blank=True,
+        db_column='PrevYearNetIncome',
+        blank=True,
         null=True)
     prevyearnetincomebeforeextra = models.FloatField(
         verbose_name='Previous year: Net income before extraordinary items',
@@ -496,59 +512,73 @@ class Finances(BaseModel):
         null=True)
     prevyearearnpershare = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearEarnPerShare', blank=True,
+        db_column='PrevYearEarnPerShare',
+        blank=True,
         null=True)
     prevyeartotalassets = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearTotalAssets', blank=True,
+        db_column='PrevYearTotalAssets',
+        blank=True,
         null=True)
     prevyearshareequity = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearShareEquity', blank=True,
+        db_column='PrevYearShareEquity',
+        blank=True,
         null=True)
     prevyeardebt = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearDebt', blank=True,
+        db_column='PrevYearDebt',
+        blank=True,
         null=True)
     prevyearshares = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearShares', blank=True,
+        db_column='PrevYearShares',
+        blank=True,
         null=True)
     prevyeartotalemp = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearTotalEmp', blank=True,
+        db_column='PrevYearTotalEmp',
+        blank=True,
         null=True)
     prevyearmnemp = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearMNEmp', blank=True,
+        db_column='PrevYearMNEmp',
+        blank=True,
         null=True)
     prevyearmarketcap = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearMarketCap', blank=True,
+        db_column='PrevYearMarketCap',
+        blank=True,
         null=True)
     prevyearclose = models.FloatField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='PrevYearClose', blank=True,
+        db_column='PrevYearClose',
+        blank=True,
         null=True)
     customrankrevenue = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='CustomRankRevenue', blank=True,
+        db_column='CustomRankRevenue',
+        blank=True,
         null=True)
     customrankprofit = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='CustomRankProfit', blank=True,
+        db_column='CustomRankProfit',
+        blank=True,
         null=True)
     customrankassets = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='CustomRankAssets', blank=True,
+        db_column='CustomRankAssets',
+        blank=True,
         null=True)
     customrankmarketcap = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='CustomRankMarketCap', blank=True,
+        db_column='CustomRankMarketCap',
+        blank=True,
         null=True)
     customrankblend = models.IntegerField(
         help_text='(Not needed, see previous rows of data)',
-        db_column='CustomRankBlend', blank=True,
+        db_column='CustomRankBlend',
+        blank=True,
         null=True)
     notes = models.TextField(
         verbose_name='Internal notes',
@@ -568,8 +598,8 @@ class Finances(BaseModel):
     def __str__(self):
         # Easier way to do this?
         return '%s finances: %s' % (
-            '' if self.publishyear is None else self.publishyear,
-            self.coid.name)
+            ''
+            if self.publishyear is None else self.publishyear, self.coid.name)
 
     class Meta:
         managed = True
@@ -696,7 +726,8 @@ class NonprofitSalary(BaseModel):
 class OfficerSalary(BaseModel):
     id = models.AutoField(
         verbose_name='Officer Salary ID',
-        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
         db_column='ID',
         primary_key=True)
     officerid = models.ForeignKey(
@@ -706,23 +737,22 @@ class OfficerSalary(BaseModel):
         help_text='The related officer record.',
         db_column='OfficerID')
     added = models.DateField(
-        verbose_name='Added',
-        help_text='Date added.',
-        db_column='Added')
+        verbose_name='Added', help_text='Date added.', db_column='Added')
     publishyear = models.IntegerField(
         verbose_name='Publish year',
         help_text='Year this record is used for publishing.',
         db_column='PublishYear')
     title = models.CharField(
         verbose_name='Officer title',
-        help_text='(Deprecated, see Officer record)',
+        help_text='Title of the officer for this year.',
         db_column='Title',
         max_length=100,
         blank=True,
         null=True)
     ceo = models.IntegerField(
         verbose_name='Is CEO',
-        help_text='(Deprecated, see Officer record) True (1) or False (0) on whether this is a CEO or not.',
+        help_text=
+        '(Deprecated, see Officer record) True (1) or False (0) on whether this is a CEO or not.',
         db_column='CEO',
         blank=True,
         null=True)
@@ -749,10 +779,7 @@ class OfficerSalary(BaseModel):
         blank=True,
         null=True)
     bonus = models.FloatField(
-        verbose_name='Bonus',
-        db_column='Bonus',
-        blank=True,
-        null=True)
+        verbose_name='Bonus', db_column='Bonus', blank=True, null=True)
     bonuschange = models.FloatField(
         help_text='(Deprecated, managed in previous records)',
         db_column='BonusChange',
@@ -798,7 +825,7 @@ class OfficerSalary(BaseModel):
         verbose_name='Stock expenses',
         help_text='(Unsure?)',
         db_column='StockExpense',
-         blank=True,
+        blank=True,
         null=True)
     restricted = models.FloatField(
         verbose_name='Restricted',
@@ -875,7 +902,8 @@ class OfficerSalary(BaseModel):
         null=True)
     fullyear = models.IntegerField(
         verbose_name='Is full year',
-        help_text='True (1) or False (0) whether this data is for the full fiscal year.',
+        help_text=
+        'True (1) or False (0) whether this data is for the full fiscal year.',
         db_column='FullYear',
         blank=True,
         null=True)
@@ -954,9 +982,9 @@ class OfficerSalary(BaseModel):
     def __str__(self):
         # Easier way to do this?
         return '%s salary: %s, %s, %s' % (
-            '' if self.publishyear is None else self.publishyear,
-            '' if self.officerid.last is None else self.officerid.last,
-            '' if self.officerid.title is None else self.officerid.title,
+            '' if self.publishyear is None else self.publishyear, '-'
+            if self.title is None else self.title, ''
+            if self.officerid.last is None else self.officerid.last,
             self.officerid.coid.name)
 
     class Meta:
@@ -970,7 +998,8 @@ class OfficerSalary(BaseModel):
 class Officer(BaseModel):
     id = models.AutoField(
         verbose_name='Officer ID',
-        help_text='This is an auto incrementing ID that should not need to be manually created or updated.',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
         db_column='ID',
         primary_key=True)
     coid = models.ForeignKey(
@@ -982,14 +1011,17 @@ class Officer(BaseModel):
     # TODO: Change to boolean field
     dropped = models.IntegerField(
         verbose_name='Is dropped',
-        help_text='True (1) or False (0) on whether this person is no longer with company and should not show up in publication.',
+        help_text=
+        'True (1) or False (0) on whether this person is no longer with company and should not show up in publication.',
         db_column='Dropped',
         blank=True,
         null=True)
     salut = models.CharField(
         verbose_name='Salut',
         help_text='Name prefix',
-        db_column='Salut', max_length=50, blank=True,
+        db_column='Salut',
+        max_length=50,
+        blank=True,
         null=True)
     first = models.CharField(
         verbose_name='First name',
@@ -1004,9 +1036,7 @@ class Officer(BaseModel):
         blank=True,
         null=True)
     last = models.CharField(
-        verbose_name='Last name',
-        db_column='Last',
-        max_length=200)
+        verbose_name='Last name', db_column='Last', max_length=200)
     lineage = models.CharField(
         verbose_name='Lineage suffix',
         help_text='Name suffix or lineage.',
@@ -1030,14 +1060,16 @@ class Officer(BaseModel):
         null=True)
     race = models.CharField(
         verbose_name='Race',
-        help_text='This field is not standardized or consistenly used so is probably not a reliable field for publication.',
+        help_text=
+        'This field is not standardized or consistenly used so is probably not a reliable field for publication.',
         db_column='Race',
         max_length=50,
         blank=True,
         null=True)
     title = models.CharField(
         verbose_name='Title',
-        help_text='The current title of the officer.',
+        help_text=
+        'The current title of the officer.  Titls should be managed in the Office Salary table, so that changes to the title can be tracked.',
         db_column='Title',
         max_length=110,
         blank=True,
@@ -1049,10 +1081,7 @@ class Officer(BaseModel):
         blank=True,
         null=True)
     birthday = models.DateField(
-        verbose_name='Birthday',
-        db_column='Birthday',
-        blank=True,
-        null=True)
+        verbose_name='Birthday', db_column='Birthday', blank=True, null=True)
     tenure = models.CharField(
         verbose_name='Tenure',
         help_text='Year this officer joined the company.',
@@ -1095,12 +1124,9 @@ class Officer(BaseModel):
 
     def __str__(self):
         # Easier way to do this?
-        return '%s %s %s, %s, %s' % (
-            '' if self.first is None else self.first,
-            '' if self.middle is None else self.middle,
-            self.last,
-            '' if self.title is None else self.title,
-            self.coid.name)
+        return '%s %s %s, %s' % ('' if self.first is None else self.first, ''
+                                 if self.middle is None else self.middle,
+                                 self.last, self.coid.name)
 
     class Meta:
         managed = True
