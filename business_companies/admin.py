@@ -91,11 +91,12 @@ class CompanyAdmin(SimpleHistoryAdmin):
 class EmployeesAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'coid', 'publishyear', 'added', 'total')
     list_filter = ('publishyear', )
-    search_fields = ['coid__name', 'publishyear']
+    search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
+    readonly_fields = ('id', )
     fieldsets = (
         (None, {
-            'fields': ('coid', 'added', 'publishyear')
+            'fields': ('id', 'coid', 'added', 'publishyear')
         }),
         ('Employees', {
             'fields': ('total', 'parttime', 'fulltime', 'union', 'minnesota'),
@@ -115,11 +116,12 @@ class FinancesAdmin(SimpleHistoryAdmin):
                     'netincomebeforeextra', 'netincome', 'marketcap',
                     'totalassets')
     list_filter = ('publishyear', )
-    search_fields = ['coid__name', 'publishyear']
+    search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
+    readonly_fields = ('id', )
     fieldsets = (
         (None, {
-            'fields': ('coid', 'publishyear', 'maxoffye')
+            'fields': ('id', 'coid', 'publishyear', 'maxoffye')
         }),
         ('Financials', {
             'description':
@@ -145,12 +147,13 @@ class FinancesAdmin(SimpleHistoryAdmin):
 class OfficerAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first')
     list_filter = ('dropped', )
-    search_fields = ['coid__name', 'title', 'last', 'first']
+    search_fields = ['id', 'coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
     inlines = [OfficerSalaryInline]
+    readonly_fields = ('id', )
     fieldsets = (
         (None, {
-            'fields': ('coid', 'dropped')
+            'fields': ('id', 'coid', 'dropped')
         }),
         ('Name', {
             'fields': ('salut', 'first', 'middle', 'last', 'lineage',
@@ -184,9 +187,10 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
     ]
     autocomplete_fields = ['officerid']
     #inlines = [OfficerInline]
+    readonly_fields = ('id', )
     fieldsets = (
         (None, {
-            'fields': ('officerid', 'added', 'publishyear', 'fiscalyearend',
+            'fields': ('id', 'officerid', 'added', 'publishyear', 'fiscalyearend',
                        'salarystatus', 'fullyear')
         }),
         ('Salary', {
