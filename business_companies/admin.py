@@ -50,7 +50,7 @@ class OfficerSalaryInline(admin.TabularInline):
 class CompanyAdmin(SimpleHistoryAdmin):
     #date_hierarchy = 'modified_date'
     list_display = ('coid', 'name', 'stocksymbol', 'category', 'companytype',
-                    'shortdesc')
+                    'shortdesc', 'modified_date')
     list_filter = ('category', 'companytype')
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
@@ -89,7 +89,7 @@ class CompanyAdmin(SimpleHistoryAdmin):
 
 @admin.register(Employees)
 class EmployeesAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'publishyear', 'added', 'total')
+    list_display = ('id', 'coid', 'publishyear', 'added', 'total', 'modified_date')
     list_filter = ('publishyear', )
     search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
@@ -114,7 +114,7 @@ class EmployeesAdmin(SimpleHistoryAdmin):
 class FinancesAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'coid', 'publishyear', 'maxoffye', 'revenue',
                     'netincomebeforeextra', 'netincome', 'marketcap',
-                    'totalassets')
+                    'totalassets', 'modified_date')
     list_filter = ('publishyear', )
     search_fields = ['id', 'coid__name', 'publishyear']
     autocomplete_fields = ['coid']
@@ -145,7 +145,8 @@ class FinancesAdmin(SimpleHistoryAdmin):
 
 @admin.register(Officer)
 class OfficerAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first')
+    list_display = ('id', 'coid', 'dropped', 'title', 'last', 'first',
+                    'modified_date')
     list_filter = ('dropped', )
     search_fields = ['id', 'coid__name', 'title', 'last', 'first']
     autocomplete_fields = ['coid']
@@ -179,7 +180,8 @@ class OfficerAdmin(SimpleHistoryAdmin):
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'salary')
+    list_display = ('id', 'publishyear', 'officerid', 'salary',
+                    'modified_date')
     list_filter = ('publishyear', )
     search_fields = [
         'publishyear', 'officerid__coid__name', 'officerid__title',
@@ -190,8 +192,8 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
     readonly_fields = ('id', )
     fieldsets = (
         (None, {
-            'fields': ('id', 'officerid', 'added', 'publishyear', 'fiscalyearend',
-                       'salarystatus', 'fullyear')
+            'fields': ('id', 'officerid', 'added', 'publishyear',
+                       'fiscalyearend', 'salarystatus', 'fullyear')
         }),
         ('Salary', {
             'fields':
