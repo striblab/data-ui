@@ -183,7 +183,7 @@ class OfficerAdmin(SimpleHistoryAdmin):
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'title', 'salary',
+    list_display = ('id', 'publishyear', 'officerid', 'title', 'calculated_total',
                     'modified_date')
     list_filter = ('publishyear', )
     search_fields = [
@@ -192,7 +192,8 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
     ]
     autocomplete_fields = ['officerid']
     #inlines = [OfficerInline]
-    readonly_fields = ('id', 'created_date', 'modified_date')
+    readonly_fields = ('id', 'created_date', 'modified_date',
+                       'calculated_total_value', 'calculated_total')
     fieldsets = (
         (None, {
             'fields': ('id', 'officerid', 'added', 'publishyear',
@@ -202,17 +203,25 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
             'fields': ('title', ),
         }),
         ('Salary', {
-            'fields':
-            ('salary', 'bonus', 'bonussalary', 'stockoptions',
-             'stockoptionsvalue', 'othertotal', 'allothertotal', 'extratotal',
-             'stockexpense', 'restricted', 'performance', 'longtermtotal',
-             'optionsexercisablevalue', 'optionsunexercisablevalue',
-             'totalltequitysct', 'totalsb', 'total', 'stockaward',
-             'optionaward', 'nonequityipc', 'sharesvesting', 'ylabel',
-             'sayonpay'),
+            'fields': (
+                'calculated_total',
+                'salary',
+                'bonus',
+                'stockaward',
+                'optionaward',
+                'nonequityipc',
+                'pensionchange',
+                'allothertotal',
+                'stockoptions',
+                'stockoptionsvalue',
+                'stockexpense',
+                'sharesvesting',
+                'totalltequitysct',
+            ),
         }),
         ('Employees', {
-            'fields': ('ceopayratio', 'medianemployeepay'),
+            'fields': ('sayonpay', 'ceopayratio', 'medianemployeepay',
+                       'stockchange'),
         }),
         ('About', {
             'fields': ('footnotes', ),
@@ -222,9 +231,26 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
         }),
         ('Other', {
             'classes': ('collapse', ),
-            'fields':
-            ('salarychange', 'bonuschange', 'longtermchange', 'nr', 'flag',
-             'totalsbchange', 'totalchange', 'stockchange', 'pensionchange'),
+            'fields': (
+                'salarychange',
+                'bonuschange',
+                'longtermchange',
+                'nr',
+                'flag',
+                'totalsbchange',
+                'totalchange',
+                'bonussalary',
+                'othertotal',
+                'extratotal',
+                'restricted',
+                'performance',
+                'longtermtotal',
+                'optionsexercisablevalue',
+                'optionsunexercisablevalue',
+                'totalsb',
+                'total',
+                'ylabel',
+            ),
         }),
     )
 

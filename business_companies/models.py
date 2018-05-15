@@ -769,7 +769,7 @@ class OfficerSalary(BaseModel):
         null=True)
     salary = models.FloatField(
         verbose_name='Base salary',
-        help_text='Base salary for officer.',
+        help_text='Base annual salary for officer.',
         db_column='Salary',
         blank=True,
         null=True)
@@ -779,7 +779,11 @@ class OfficerSalary(BaseModel):
         blank=True,
         null=True)
     bonus = models.FloatField(
-        verbose_name='Bonus', db_column='Bonus', blank=True, null=True)
+        verbose_name='Bonus',
+        help_text='Discretionary bonus; not performance related',
+        db_column='Bonus',
+        blank=True,
+        null=True)
     bonuschange = models.FloatField(
         help_text='(Deprecated, managed in previous records)',
         db_column='BonusChange',
@@ -793,13 +797,13 @@ class OfficerSalary(BaseModel):
         null=True)
     stockoptions = models.FloatField(
         verbose_name='Stock options',
-        help_text='Number of stock options.',
+        help_text='number of new stock options granted.',
         db_column='StockOptions',
         blank=True,
         null=True)
     stockoptionsvalue = models.FloatField(
         verbose_name='Value of stock options',
-        help_text='Value of stock options.',
+        help_text='Value of new stock options granted.',
         db_column='StockOptionsValue',
         blank=True,
         null=True)
@@ -811,7 +815,7 @@ class OfficerSalary(BaseModel):
         null=True)
     allothertotal = models.FloatField(
         verbose_name='All other total',
-        help_text='(Unsure?)',
+        help_text='All other compensation (perquisites)',
         db_column='AllOtherTotal',
         blank=True,
         null=True)
@@ -823,7 +827,7 @@ class OfficerSalary(BaseModel):
         null=True)
     stockexpense = models.FloatField(
         verbose_name='Stock expenses',
-        help_text='(Unsure?)',
+        help_text='Value of options exercised during the year.',
         db_column='StockExpense',
         blank=True,
         null=True)
@@ -874,7 +878,8 @@ class OfficerSalary(BaseModel):
         null=True)
     totalltequitysct = models.FloatField(
         verbose_name='Total LT equity SCT',
-        help_text='(Unsure?)',
+        help_text=
+        'Total compensation as listed in summary compensation table (not our total).',
         db_column='TotalLTEquitySCT',
         blank=True,
         null=True)
@@ -908,36 +913,39 @@ class OfficerSalary(BaseModel):
         blank=True,
         null=True)
     stockchange = models.FloatField(
-        help_text='(Deprecated, calculated)',
+        verbose_name='Stock change',
+        help_text='Total return of stock during the fiscal year.',
         db_column='StockChange',
         blank=True,
         null=True)
     stockaward = models.FloatField(
         verbose_name='Stock awards',
-        help_text='(Unsure?)',
+        help_text='Value of new restricted stock awarded.',
         db_column='StockAward',
         blank=True,
         null=True)
     optionaward = models.FloatField(
         verbose_name='Option awards',
-        help_text='(Unsure?)',
+        help_text='Value of new stock options granted',
         db_column='OptionAward',
         blank=True,
         null=True)
     nonequityipc = models.FloatField(
         verbose_name='Non-equity IPC',
-        help_text='(Unsure?)',
+        help_text='Non-equity incentive plan compensation (performance bonus).',
         db_column='NonEquityIPC',
         blank=True,
         null=True)
     pensionchange = models.FloatField(
-        help_text='(Deprecated, calculated)',
+        verbose_name='Pension change',
+        help_text=
+        'Change in pension value and nonqualified deferred compensation (an actuarial value of pension benefits; non-cash).',
         db_column='PensionChange',
         blank=True,
         null=True)
     sharesvesting = models.FloatField(
         verbose_name='Shares vesting',
-        help_text='(Unsure?)',
+        help_text='Value of restricted stock that vested during the year.',
         db_column='SharesVesting',
         blank=True,
         null=True)
@@ -949,18 +957,21 @@ class OfficerSalary(BaseModel):
         null=True)
     sayonpay = models.FloatField(
         verbose_name='Say on pay',
-        help_text='(Unsure?)',
+        help_text=
+        'Results of say on pay vote; comes at the annual meeting several weeks later.',
         db_column='SayOnPay',
         blank=True,
         null=True)
     ceopayratio = models.FloatField(
         verbose_name='CEO pay ratio',
-        help_text='Ratio of CEO to (average?) employee pay.',
+        help_text=
+        'Ratio of CEO to median employee pay (uses total in proxy Total LT equity SCT).',
         db_column='CEOPayRatio',
         blank=True,
         null=True)
     medianemployeepay = models.FloatField(
         verbose_name='Median employee pay',
+        help_text='Pay of the median employee as disclosed in the proxy.',
         db_column='MedianEmployeePay',
         blank=True,
         null=True)
@@ -986,6 +997,19 @@ class OfficerSalary(BaseModel):
             if self.title is None else self.title, ''
             if self.officerid.last is None else self.officerid.last,
             self.officerid.coid.name)
+
+    @property
+    def calculated_total_value(self):
+        return sum(
+            filter(None, [
+                self.salary, self.bonus, self.nonequityipc, self.allothertotal,
+                self.stockexpense, self.sharesvesting
+            ]))
+
+    # TODO: Find a way to make a title and description for this type of field
+    @property
+    def calculated_total(self):
+        return '${:,.2f}'.format(self.calculated_total_value)
 
     class Meta:
         managed = True
