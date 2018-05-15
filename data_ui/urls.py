@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import RedirectView
+
+# API resources
+from tastypie.api import Api
+from business_companies.api import CompanyResource, EmployeesResource
+v1_api = Api(api_name='v01')
+v1_api.register(CompanyResource())
+v1_api.register(EmployeesResource())
 
 # Update some variables in the admin
 admin.site.site_header = 'Data UI'
@@ -23,5 +30,6 @@ admin.site.site_title = 'Star Tribune Data UI'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='admin/'))
+    path('', RedirectView.as_view(url='admin/')),
+    path('api/', include(v1_api.urls)),
 ]

@@ -16,6 +16,7 @@ gunicorn = "*"
 django-environ = "*"
 "psycopg2-binary" = "*"
 uwsgi = "*"
+django-tastypie = "*"
 
 
 [dev-packages]

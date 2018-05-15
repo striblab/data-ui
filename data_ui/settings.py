@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'simple_history',
     'import_export',
+    'tastypie',
     'business_companies.apps.BusinessCompaniesConfig',
 ]
 

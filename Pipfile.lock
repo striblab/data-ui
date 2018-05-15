@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "74194a3d00d6afafa5eacba9b5b1833d573b5deb76be691dad7f9027447362dc"
+            "sha256": "1cea85ff40f0eb514379a7a5ee0d4b2a5c8e5cba61836d3a5d737b0ca4b38ec6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -49,6 +49,12 @@
                 "sha256:d090577b1800eec06c5e04c264eac271ae5d3b0869b7987ab3574ed42de1938e"
             ],
             "version": "==2.0"
+        },
+        "django-tastypie": {
+            "hashes": [
+                "sha256:1fbf61ec7467eec70bd1abcb14e3b1dc67e47cc3642ad16ed8a3709f4140678b"
+            ],
+            "version": "==0.14.1"
         },
         "et-xmlfile": {
             "hashes": [
@@ -123,6 +129,20 @@
                 "sha256:de4f88f823037a71ea5ef3c1041d96b8a68d73343133edda684fd42f575bd9d7"
             ],
             "version": "==2.7.4"
+        },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:1adb80e7a782c12e52ef9a8182bebeb73f1d7e24e374397af06fb4956c8dc5c0",
+                "sha256:e27001de32f627c22380a688bcc43ce83504a7bc5da472209b4c70f02829f0b8"
+            ],
+            "version": "==2.7.3"
+        },
+        "python-mimeparse": {
+            "hashes": [
+                "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
+                "sha256:a295f03ff20341491bfe4717a39cd0a8cc9afad619ba44b77e86b0ab8a2b8282"
+            ],
+            "version": "==1.6.0"
         },
         "pytz": {
             "hashes": [
@@ -204,7 +224,7 @@
                 "sha256:9d98697f088eb1b0fa451391f91afb5e3ebde16bbdb272819fd091151fda4f1a",
                 "sha256:f0b0e4eba956de51238e17573b7087e852dfe9854afd2e9c873f73fc0ca0a6dd"
             ],
-            "markers": "python_version < '3.4'",
+            "markers": "python_version == '2.7'",
             "version": "==1.5"
         },
         "colorama": {
