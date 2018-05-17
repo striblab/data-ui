@@ -89,7 +89,8 @@ class Company(BaseModel):
         help_text='The company ID to any related reference.',
         db_column='SeeAlsoID',
         blank=True,
-        null=True)
+        null=True,
+        related_name='see_also_company')
     address1 = models.CharField(
         verbose_name='Address (line 1)',
         db_column='Address1',
@@ -299,7 +300,8 @@ class Employees(BaseModel):
         on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='The associated company with this data.',
-        db_column='COID')
+        db_column='COID',
+        related_name='employees_company')
     parttime = models.IntegerField(
         verbose_name='Part-time',
         help_text='Number of part-time employees',
@@ -372,7 +374,8 @@ class Finances(BaseModel):
         on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='Company associated with this record.',
-        db_column='COID')
+        db_column='COID',
+        related_name='finances_company')
     publishyear = models.IntegerField(
         verbose_name='Publish year',
         help_text='Year this data will be published.',
@@ -735,7 +738,8 @@ class OfficerSalary(BaseModel):
         on_delete=models.CASCADE,
         verbose_name='Officer',
         help_text='The related officer record.',
-        db_column='OfficerID')
+        db_column='OfficerID',
+        related_name='salary_officer')
     added = models.DateField(
         verbose_name='Added', help_text='Date added.', db_column='Added')
     publishyear = models.IntegerField(
@@ -1031,7 +1035,8 @@ class Officer(BaseModel):
         on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='Company associated with this record.',
-        db_column='COID')
+        db_column='COID',
+        related_name='officer_company')
     # TODO: Change to boolean field
     dropped = models.IntegerField(
         verbose_name='Is dropped',

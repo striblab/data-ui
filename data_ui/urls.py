@@ -19,13 +19,14 @@ from django.views.generic import RedirectView
 
 # API resources
 from tastypie.api import Api
-from business_companies.api import CompanyResource, EmployeesResource, FinancesResource, OfficerResource, OfficerSalaryResource
+from business_companies.api import CompanyResource, EmployeesResource, FinancesResource, OfficerResource, OfficerSalaryResource, CompanyDetailsResource
 v1_api = Api(api_name='v01')
 v1_api.register(CompanyResource())
 v1_api.register(EmployeesResource())
 v1_api.register(FinancesResource())
 v1_api.register(OfficerResource())
 v1_api.register(OfficerSalaryResource())
+v1_api.register(CompanyDetailsResource())
 
 # Update some variables in the admin
 admin.site.site_header = 'Data UI'
