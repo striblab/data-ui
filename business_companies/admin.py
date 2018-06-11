@@ -123,7 +123,7 @@ class FinancesAdmin(SimpleHistoryAdmin):
     readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
-            'fields': ('id', 'coid', 'publishyear', 'maxoffye')
+            'fields': ('id', 'coid', 'publishyear', 'maxoffye', 'customrank')
         }),
         ('Financials', {
             'description':
@@ -140,7 +140,7 @@ class FinancesAdmin(SimpleHistoryAdmin):
         }),
         ('Other', {
             'classes': ('collapse', ),
-            'fields': ('ceo', 'category', 'customrank', 'done'),
+            'fields': ('ceo', 'category', 'done'),
         }),
     )
 
@@ -183,8 +183,8 @@ class OfficerAdmin(SimpleHistoryAdmin):
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'title', 'calculated_total',
-                    'modified_date')
+    list_display = ('id', 'publishyear', 'officerid', 'title',
+                    'calculated_total', 'modified_date')
     list_filter = ('publishyear', )
     search_fields = [
         'publishyear', 'officerid__coid__name', 'title', 'officerid__last',

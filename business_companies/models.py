@@ -383,7 +383,7 @@ class Finances(BaseModel):
         db_column='PublishYear')
     customrank = models.IntegerField(
         verbose_name='Custom rank',
-        help_text='(Not needed) Override ranking by revenue or other number.',
+        help_text='Override the default ranking for the year, which is usually by revenue.  Overall, this is helpful for previous years, as data will can get updated and companies move in and out of the state.',
         db_column='CustomRank',
         blank=True,
         null=True)
