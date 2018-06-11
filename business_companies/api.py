@@ -137,7 +137,7 @@ class CompanyDetailsResource(ModelResource):
     class Meta():
         queryset = Company.objects.all()
         resource_name = 'company_details'
-        filtering = {'name': ALL, 'coid': ALL}
+        filtering = {'name': ALL, 'coid': ALL, 'dropped': ALL}
         allowed_methods = ['get']
         authentication = ApiKeyAuthentication()
         authorization = DjangoAuthorization()
