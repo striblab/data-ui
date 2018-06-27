@@ -49,13 +49,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'simple_history',
-    'import_export',
+    #'import_export',
     'tastypie',
     'business_companies.apps.BusinessCompaniesConfig',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,3 +137,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = env('STATIC_URL')
 STATIC_ROOT = env('STATIC_ROOT')
+
+INTERNAL_IPS = ['127.0.0.1']

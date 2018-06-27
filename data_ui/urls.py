@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
-
+from django.conf import settings
 # API resources
 from tastypie.api import Api
 from business_companies.api import CompanyResource, EmployeesResource, FinancesResource, OfficerResource, OfficerSalaryResource, CompanyDetailsResource
@@ -37,3 +37,10 @@ urlpatterns = [
     path('', RedirectView.as_view(url='admin/')),
     path('api/', include(v1_api.urls)),
 ]
+
+# Debug bar
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__', include(debug_toolbar.urls)),
+    ] + urlpatterns

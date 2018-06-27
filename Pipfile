@@ -17,6 +17,7 @@ django-environ = "*"
 "psycopg2-binary" = "*"
 uwsgi = "*"
 django-tastypie = "*"
+django-debug-toolbar = "*"
 
 
 [dev-packages]
