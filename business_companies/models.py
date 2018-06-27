@@ -383,7 +383,8 @@ class Finances(BaseModel):
         db_column='PublishYear')
     customrank = models.IntegerField(
         verbose_name='Custom rank',
-        help_text='Override the default ranking for the year, which is usually by revenue.  Overall, this is helpful for previous years, as data will can get updated and companies move in and out of the state.',
+        help_text=
+        'Override the default ranking for the year, which is usually by revenue.  Overall, this is helpful for previous years, as data will can get updated and companies move in and out of the state.',
         db_column='CustomRank',
         blank=True,
         null=True)
@@ -1002,6 +1003,10 @@ class OfficerSalary(BaseModel):
             if self.officerid.last is None else self.officerid.last,
             self.officerid.coid.name)
 
+    # Note: This calculcated field needs to be recreated in the
+    # admin list view, as custom properties are not available,
+    # since they are not actually SQL properties.  Maybe
+    # there is a way to define that stuff on the model better.
     @property
     def calculated_total_value(self):
         return sum(

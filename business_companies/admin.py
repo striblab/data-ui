@@ -1,6 +1,8 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
 from .models import Company, Employees, Finances, NonprofitFinances, NonprofitSalary, OfficerSalary, Officer
+from django.db.models import ExpressionWrapper, DecimalField
+from django.db.models.functions import Coalesce
 
 # Referenence
 # https://docs.djangoproject.com/en/2.0/ref/contrib/admin/
@@ -183,8 +185,8 @@ class OfficerAdmin(SimpleHistoryAdmin):
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'title',
-                    'calculated_total', 'modified_date')
+    list_display = ('id', 'publishyear', 'officerid', 'title', 'total_compensation',
+                    'modified_date')
     list_filter = ('publishyear', )
     search_fields = [
         'publishyear', 'officerid__coid__name', 'title', 'officerid__last',
@@ -253,6 +255,28 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
             ),
         }),
     )
+
+    # Create custom calculated total so that we can allow for sorting
+    # in the list view.  :/
+    def total_compensation(self, obj):
+        return obj.calculated_total
+
+    total_compensation.admin_order_field = 'admin_calculated_total_value'
+
+    # Update query set
+    def get_queryset(self, request):
+        qs = super(OfficerSalaryAdmin, self).get_queryset(request)
+
+        # We have to re-create the calculcate total here to
+        qs = qs.annotate(
+            admin_calculated_total_value=ExpressionWrapper(
+                Coalesce('salary', 0) + Coalesce('bonus', 0) +
+                Coalesce('nonequityipc', 0) + Coalesce('allothertotal', 0) +
+                Coalesce('stockexpense', 0) + Coalesce('sharesvesting', 0),
+                output_field=DecimalField())).order_by(
+                    'admin_calculated_total_value')
+
+        return qs
 
 
 # Register other models
