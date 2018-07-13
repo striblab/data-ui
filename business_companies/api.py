@@ -78,9 +78,30 @@ class OfficerResource(ModelResource):
         cache = SimpleCache(cache_name='default', timeout=10)
 
 
+# Officer simple model, specificlly without salaries, so that salaries
+# can pull officers without recursion
+class OfficerSimpleResource(ModelResource):
+    coid = fields.ForeignKey(CompanyResource, 'coid', full=True)
+
+    class Meta:
+        queryset = Officer.objects.all()
+        resource_name = 'officer'
+        allowed_methods = ['get']
+        filtering = {
+            'first': ALL,
+            'last': ALL,
+            'title': ALL,
+            'coid': ALL_WITH_RELATIONS,
+        }
+        authentication = ApiKeyAuthentication()
+        authorization = DjangoAuthorization()
+        cache = SimpleCache(cache_name='default', timeout=10)
+
+
 # OfficerSalary model
 class OfficerSalaryResource(ModelResource):
-    officerid = fields.ForeignKey(OfficerResource, 'officerid')
+    officerid = fields.ForeignKey(
+        OfficerSimpleResource, 'officerid', full=True)
     calculated_total_value = fields.FloatField(
         attribute='calculated_total_value', readonly=True, blank=True)
 
@@ -90,7 +111,9 @@ class OfficerSalaryResource(ModelResource):
         allowed_methods = ['get']
         filtering = {
             'publishyear': ALL,
+            'title': ALL,
             'officerid': ALL_WITH_RELATIONS,
+            'officerid__coid': ALL_WITH_RELATIONS,
         }
         authentication = ApiKeyAuthentication()
         authorization = DjangoAuthorization()
