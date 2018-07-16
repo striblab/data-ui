@@ -757,7 +757,7 @@ class OfficerSalary(BaseModel):
     ceo = models.IntegerField(
         verbose_name='Is CEO',
         help_text=
-        '(Deprecated, see Officer record) True (1) or False (0) on whether this is a CEO or not.',
+        'True (1) or False (0) on whether this officer is counted as CEO for this year.',
         db_column='CEO',
         blank=True,
         null=True)

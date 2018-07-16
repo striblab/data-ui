@@ -185,9 +185,12 @@ class OfficerAdmin(SimpleHistoryAdmin):
 
 @admin.register(OfficerSalary)
 class OfficerSalaryAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'publishyear', 'officerid', 'title', 'total_compensation',
-                    'modified_date')
-    list_filter = ('publishyear', )
+    list_display = ('id', 'publishyear', 'officerid', 'title', 'ceo',
+                    'total_compensation', 'modified_date')
+    list_filter = (
+        'ceo',
+        'publishyear',
+    )
     search_fields = [
         'publishyear', 'officerid__coid__name', 'title', 'officerid__last',
         'officerid__first'
@@ -202,7 +205,10 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
                        'fiscalyearend', 'salarystatus', 'fullyear')
         }),
         ('Officer', {
-            'fields': ('title', ),
+            'fields': (
+                'title',
+                'ceo',
+            ),
         }),
         ('Salary', {
             'fields': (
