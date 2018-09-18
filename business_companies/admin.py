@@ -40,6 +40,13 @@ class FinancesInline(admin.TabularInline):
               'marketcap', 'totalassets')
 
 
+class NonprofitFinancesInline(admin.TabularInline):
+    model = NonprofitFinances
+    extra = 0
+    show_change_link = True
+    fields = ('publishyear', 'revenue', 'expenses', 'excess')
+
+
 class OfficerSalaryInline(admin.TabularInline):
     model = OfficerSalary
     extra = 0
@@ -56,7 +63,7 @@ class CompanyAdmin(SimpleHistoryAdmin):
     list_filter = ('category', 'companytype')
     search_fields = ['coid', 'name', 'stocksymbol']
     autocomplete_fields = ['seealsoid']
-    inlines = [EmployeesInline, OfficerInline, FinancesInline]
+    inlines = [EmployeesInline, OfficerInline, FinancesInline, NonprofitFinancesInline]
     readonly_fields = ('created_date', 'modified_date')
     fieldsets = (
         (None, {
@@ -143,6 +150,35 @@ class FinancesAdmin(SimpleHistoryAdmin):
         ('Other', {
             'classes': ('collapse', ),
             'fields': ('ceo', 'category', 'done'),
+        }),
+    )
+
+
+@admin.register(NonprofitFinances)
+class NonprofitFinancesAdmin(SimpleHistoryAdmin):
+    list_display = ('id', 'coid', 'publishyear', 'revenue', 'expenses', 'excess', 'modified_date')
+    list_filter = ('publishyear', )
+    search_fields = ['id', 'coid__name', 'publishyear']
+    autocomplete_fields = ['coid']
+    readonly_fields = ('id', 'created_date', 'modified_date')
+    fieldsets = (
+        (None, {
+            'fields': ('id', 'coid', 'publishyear', 'added', 'fiscalyearend', 'annualreportdate', 'source', 'status')
+        }),
+        ('Financials', {
+            'description':
+            'All numbers should be full, base-10 values.  For example 4 billion needs to be 4000000000.',
+            'fields': ('contribgrants', 'revenue', 'expenses', 'excess', 'programservicerevenue', 'investgainslosses', 'programserviceexpense', 'managementgeneralexpenses', 'fundraisingexpenses', 'eoybalance'),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', 'created_date', 'modified_date'),
+        }),
+        ('Other', {
+            'classes': ('collapse', ),
+            'fields': ('inputsource', ),
         }),
     )
 
@@ -289,7 +325,7 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
 #admin.site.register(Company, SimpleHistoryAdmin)
 #admin.site.register(Employees, SimpleHistoryAdmin)
 #admin.site.register(Finances, SimpleHistoryAdmin)
-admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
+#admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
 admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
 #admin.site.register(OfficerSalary, SimpleHistoryAdmin)
 #admin.site.register(Officer, SimpleHistoryAdmin)

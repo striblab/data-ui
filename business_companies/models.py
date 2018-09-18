@@ -244,7 +244,7 @@ class Company(BaseModel):
         db_column='EnteredBy',
         max_length=30,
         blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     class_field = models.CharField(
         verbose_name='Class',
         help_text=
@@ -615,61 +615,106 @@ class Finances(BaseModel):
 
 class NonprofitFinances(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
+        verbose_name='Nonprofit Finances ID',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
     coid = models.ForeignKey(
-        Company, on_delete=models.CASCADE,
-        db_column='COID')  # Field name made lowercase.
-    added = models.DateField(db_column='Added')  # Field name made lowercase.
+        Company,
+        on_delete=models.CASCADE,
+        verbose_name='Company',
+        help_text='Company associated with this record.',
+        db_column='COID')
+    added = models.DateField(
+        db_column='Added',
+        verbose_name='Added',
+        help_text='Date when this record was added.',
+        default=datetime.date.today)
     publishyear = models.IntegerField(
-        db_column='PublishYear')  # Field name made lowercase.
+        verbose_name='Publish year',
+        help_text='Year this record is used for publishing.',
+        db_column='PublishYear')
     status = models.CharField(
-        db_column='Status', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        verbose_name='Status',
+        help_text='Describes status (unsure?).',
+        db_column='Status',
+        max_length=50,
+        blank=True,
+        null=True)
     fiscalyearend = models.DateField(
-        db_column='FiscalYearEnd')  # Field name made lowercase.
+        verbose_name='Fiscal year end',
+        help_text='The date of the fiscal year end.',
+        db_column='FiscalYearEnd')
     annualreportdate = models.DateField(
-        db_column='AnnualReportDate')  # Field name made lowercase.
+        verbose_name='Annual report date',
+        help_text='The date of the annual report.',
+        db_column='AnnualReportDate')
     source = models.CharField(
+        verbose_name='Source',
+        help_text='The source of the data, such as "IRS 990".',
         db_column='Source', max_length=512, blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     contribgrants = models.FloatField(
+        verbose_name='Contributions and grants',
+        help_text='The dollar amount of contributions and grants.',
         db_column='ContribGrants', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     revenue = models.FloatField(
+        verbose_name='Revenue',
         db_column='Revenue', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     expenses = models.FloatField(
+        verbose_name='Expenses',
         db_column='Expenses', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     excess = models.FloatField(
+        verbose_name='Excess',
+        help_text='(needs description)',
         db_column='Excess', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     programservicerevenue = models.FloatField(
+        verbose_name='Programs and service revenue',
+        help_text='The dollar amount of revenue specifically from programs and service.',
         db_column='ProgramServiceRevenue', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     investgainslosses = models.FloatField(
+        verbose_name='Investment gains and losses',
         db_column='InvestGainsLosses', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     programserviceexpense = models.FloatField(
+        verbose_name='Programs and service expenses',
+        help_text='The dollar amount of expenses specifically from programs and service.',
         db_column='ProgramServiceExpense', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     managementgeneralexpenses = models.FloatField(
+        verbose_name='Management and general expenses',
+        help_text='The dollar amount of expenses specifically from management and general operating.',
         db_column='ManagementGeneralExpenses', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     fundraisingexpenses = models.FloatField(
+        verbose_name='Fundraising expenses',
+        help_text='The dollar amount of expenses specifically from fundraising.',
         db_column='FundraisingExpenses', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     eoybalance = models.FloatField(
+        verbose_name='End of year balance',
         db_column='EOYBalance', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     inputsource = models.CharField(
+        verbose_name='Input source',
+        help_text='how this data was entered, specifically if it was done through an import process.',
         db_column='InputSource', max_length=512, blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        verbose_name='Internal notes',
+        help_text='Any notes used for internal purposes.',
+        db_column='Notes', blank=True, null=True)
     footnotes = models.TextField(
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
         db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
 
     history = HistoricalRecords()
 
@@ -678,45 +723,46 @@ class NonprofitFinances(BaseModel):
         db_table = 'NonProfit_Finances'
         unique_together = (('coid', 'publishyear'), )
         verbose_name_plural = 'NonProfit Finances'
+        ordering = ['-publishyear', '-revenue']
 
 
 class NonprofitSalary(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)  # Field name made lowercase.
+        db_column='ID', primary_key=True)
     officerid = models.ForeignKey(
         'Officer', on_delete=models.CASCADE,
-        db_column='OfficerID')  # Field name made lowercase.
-    added = models.DateField(db_column='Added')  # Field name made lowercase.
+        db_column='OfficerID')
+    added = models.DateField(db_column='Added')
     publishyear = models.IntegerField(
-        db_column='PublishYear')  # Field name made lowercase.
+        db_column='PublishYear')
     salarystatus = models.CharField(
         db_column='SalaryStatus', max_length=50, blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     fiscalyearend = models.DateField(
-        db_column='FiscalYearEnd')  # Field name made lowercase.
+        db_column='FiscalYearEnd')
     fiscalyearnbr = models.IntegerField(
         db_column='FiscalYearNBR', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     salary = models.FloatField(
         db_column='Salary', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     benefit = models.FloatField(
         db_column='Benefit', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     other = models.FloatField(
-        db_column='Other', blank=True, null=True)  # Field name made lowercase.
+        db_column='Other', blank=True, null=True)
     bonus = models.FloatField(
-        db_column='Bonus', blank=True, null=True)  # Field name made lowercase.
+        db_column='Bonus', blank=True, null=True)
     deferred = models.FloatField(
         db_column='Deferred', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     total = models.FloatField(
-        db_column='Total', blank=True, null=True)  # Field name made lowercase.
+        db_column='Total', blank=True, null=True)
     footnotes = models.TextField(
         db_column='Footnotes', blank=True,
-        null=True)  # Field name made lowercase.
+        null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)  # Field name made lowercase.
+        db_column='Notes', blank=True, null=True)
 
     history = HistoricalRecords()
 
