@@ -18,6 +18,7 @@ Note that you can use Docker for local development as well; see section below.
 Settings that are unique to the environment are managed with environment variables. You can manage these how you want, or you can use a `.env` file. The following variables are required or suggested to be set.
 
 1.  `DEBUG`: `True` or `False`, defaults to false.
+    - Have run into issues where the [Debug Toolbar](https://github.com/jazzband/django-debug-toolbar) slows down the page significantly, so this is a separate `DEBUG_TOOLBAR` variable.
 1.  `SECRET_KEY`: Random, unique string
 1.  `DEFAULT_DB_URI`: Databsase URI for the default database that manages users, something like `database-type://user:pass@host:port/database-name`, defaults to a local SQLite file.
     - If using the Docker deployment, it includes a Postgres instance and sets this variable to that.

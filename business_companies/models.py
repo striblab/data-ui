@@ -718,6 +718,12 @@ class NonprofitFinances(BaseModel):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        # Easier way to do this?
+        return '%s finances: %s' % (
+            ''
+            if self.publishyear is None else self.publishyear, self.coid.name)
+
     class Meta:
         managed = True
         db_table = 'NonProfit_Finances'
@@ -728,49 +734,119 @@ class NonprofitFinances(BaseModel):
 
 class NonprofitSalary(BaseModel):
     id = models.AutoField(
-        db_column='ID', primary_key=True)
+        verbose_name='Nonprofit Salary ID',
+        help_text=
+        'This is an auto incrementing ID that should not need to be manually created or updated.',
+        db_column='ID',
+        primary_key=True)
     officerid = models.ForeignKey(
-        'Officer', on_delete=models.CASCADE,
+        'Officer',
+        on_delete=models.CASCADE,
+        verbose_name='Officer ID',
+        help_text=
+        'The officer that this data is for.',
         db_column='OfficerID')
-    added = models.DateField(db_column='Added')
+    added = models.DateField(
+        verbose_name='Added',
+        help_text='Date when this record was added.',
+        db_column='Added')
     publishyear = models.IntegerField(
+        verbose_name='Publish year',
+        help_text='Year this record is used for publishing.',
         db_column='PublishYear')
     salarystatus = models.CharField(
-        db_column='SalaryStatus', max_length=50, blank=True,
+        verbose_name='Status',
+        help_text='Status of record (unsure what for?).',
+        db_column='SalaryStatus',
+        max_length=50,
+        blank=True,
+        null=True)
+    title = models.CharField(
+        verbose_name='Officer title',
+        help_text='Title of the officer for this year.',
+        db_column='Title',
+        max_length=100,
+        blank=True,
+        null=True)
+    ceo = models.IntegerField(
+        verbose_name='Is CEO',
+        help_text=
+        'True (1) or False (0) on whether this officer is counted as CEO for this year.',
+        db_column='CEO',
+        blank=True,
         null=True)
     fiscalyearend = models.DateField(
+        verbose_name='Fiscal year end',
+        help_text='Fiscal year end date.',
         db_column='FiscalYearEnd')
     fiscalyearnbr = models.IntegerField(
-        db_column='FiscalYearNBR', blank=True,
+        verbose_name='Fiscal Year NBR',
+        help_text='(unsure what used for?)',
+        db_column='FiscalYearNBR',
+        blank=True,
         null=True)
     salary = models.FloatField(
-        db_column='Salary', blank=True,
+        verbose_name='Base salary',
+        db_column='Salary',
+        blank=True,
         null=True)
     benefit = models.FloatField(
-        db_column='Benefit', blank=True,
+        verbose_name='Benefits',
+        help_text='Dollar value of benefits.',
+        db_column='Benefit',
+        blank=True,
         null=True)
     other = models.FloatField(
-        db_column='Other', blank=True, null=True)
+        verbose_name='Other',
+        help_text='Other compensation.',
+        db_column='Other',
+        blank=True,
+        null=True)
     bonus = models.FloatField(
-        db_column='Bonus', blank=True, null=True)
+        verbose_name='Bonus',
+        db_column='Bonus',
+        blank=True,
+        null=True)
     deferred = models.FloatField(
-        db_column='Deferred', blank=True,
+        verbose_name='Deferred',
+        help_text='Any defferred compensation.',
+        db_column='Deferred',
+        blank=True,
         null=True)
     total = models.FloatField(
-        db_column='Total', blank=True, null=True)
+        verbose_name='Total compensation',
+        help_text='This is manually entered and not calculated.',
+        db_column='Total',
+        blank=True,
+        null=True)
     footnotes = models.TextField(
-        db_column='Footnotes', blank=True,
+        verbose_name='Footnotes',
+        help_text='Any footnotes to be used in publication.',
+        db_column='Footnotes',
+        blank=True,
         null=True)
     notes = models.TextField(
-        db_column='Notes', blank=True, null=True)
+        verbose_name='Internal notes',
+        help_text='Any notes used for internal purposes.',
+        db_column='Notes',
+        blank=True,
+        null=True)
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        # Easier way to do this?
+        return '%s salary: %s, %s' % (
+            '' if self.publishyear is None else self.publishyear,
+            '' if self.officerid.last is None else self.officerid.last,
+            self.officerid.coid.name)
 
     class Meta:
         managed = True
         db_table = 'NonProfit_Salaries'
         unique_together = (('officerid', 'publishyear'), )
         verbose_name_plural = 'NonProfit Salaries'
+        ordering = ['-publishyear', '-total', 'officerid__last']
 
 
 class OfficerSalary(BaseModel):

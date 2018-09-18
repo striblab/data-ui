@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # a .env file
 env = environ.Env(
     DEBUG=(bool, False),
+    DEBUG_TOOLBAR=(bool, False),
     SECRET_KEY=(str, '!=%!i_1n@y4=b8)^!rbn+x^(5coz1li!86n^hbg2=^3pzoi34z'),
     DEFAULT_DB_URI=(str, 'sqlite:///{}'.format(
         os.path.join(BASE_DIR, 'db.sqlite3'))),
@@ -41,7 +42,6 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,15 +49,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'simple_history',
     #'import_export',
     'tastypie',
     'business_companies.apps.BusinessCompaniesConfig',
 ]
+if env('DEBUG_TOOLBAR'):
+    INSTALLED_APPS += ('debug_toolbar', )
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,6 +67,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
+if env('DEBUG_TOOLBAR'):
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 
 ROOT_URLCONF = 'data_ui.urls'
 

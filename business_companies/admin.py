@@ -321,11 +321,61 @@ class OfficerSalaryAdmin(SimpleHistoryAdmin):
         return qs
 
 
+@admin.register(NonprofitSalary)
+class NonprofitSalaryAdmin(SimpleHistoryAdmin):
+    list_display = ('id', 'publishyear', 'officerid', 'title', 'ceo', 'total', 'modified_date')
+    list_filter = (
+        'publishyear',
+        'ceo',
+    )
+    search_fields = [
+        'publishyear', 'officerid__coid__name', 'officerid__last',
+        'officerid__first'
+    ]
+    autocomplete_fields = ['officerid']
+    #inlines = [OfficerInline]
+    readonly_fields = ('id', 'created_date', 'modified_date')
+    fieldsets = (
+        (None, {
+            'fields': ('id', 'officerid', 'added', 'publishyear',
+                       'fiscalyearend', 'salarystatus')
+        }),
+        ('Officer', {
+            'fields': (
+                'title',
+                'ceo',
+            ),
+        }),
+        ('Salary', {
+            'fields': (
+                'salary',
+                'benefit',
+                'other',
+                'bonus',
+                'deferred',
+                'total',
+            ),
+        }),
+        ('About', {
+            'fields': ('footnotes', ),
+        }),
+        ('Internal', {
+            'fields': ('notes', 'created_date', 'modified_date'),
+        }),
+        ('Other', {
+            'classes': ('collapse', ),
+            'fields': (
+                'fiscalyearnbr',
+            ),
+        }),
+    )
+
+
 # Register other models
 #admin.site.register(Company, SimpleHistoryAdmin)
 #admin.site.register(Employees, SimpleHistoryAdmin)
 #admin.site.register(Finances, SimpleHistoryAdmin)
 #admin.site.register(NonprofitFinances, SimpleHistoryAdmin)
-admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
+#admin.site.register(NonprofitSalary, SimpleHistoryAdmin)
 #admin.site.register(OfficerSalary, SimpleHistoryAdmin)
 #admin.site.register(Officer, SimpleHistoryAdmin)
