@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 django = "*"
 mysqlclient = "*"
 django-simple-history = "*"
@@ -18,14 +15,11 @@ django-environ = "*"
 uwsgi = "*"
 django-tastypie = "*"
 django-debug-toolbar = "*"
-
+pylint = "*"
 
 [dev-packages]
-
 pylint = "*"
 yapf = "*"
 
-
 [requires]
-
 python_version = "3.6"
