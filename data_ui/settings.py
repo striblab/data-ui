@@ -96,7 +96,7 @@ DATABASES = {'default': env.db('DEFAULT_DB_URI')}
 DATABASES['datadrop_business'] = env.db('DATADROP_BUSINESS_DB_URI')
 
 DATABASE_ROUTERS = [
-    'business_companies.routers.BusinessCompaniesRouter',
+    'business_companies.db.routers.BusinessCompaniesRouter',
 ]
 
 # Password validation

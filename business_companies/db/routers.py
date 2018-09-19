@@ -20,12 +20,20 @@ class BusinessCompaniesRouter(object):
     def allow_relation(self, obj1, obj2, **hints):
         """Determine if relationship is allowed between two objects."""
 
-        # Allow any relation between two models that are both in the Example app.
+        # Allow any relation between two models that are both in this app.
         if obj1._meta.app_label == 'business_companies' and obj2._meta.app_label == 'business_companies':
             return True
-        # No opinion if neither object is in the Example app (defer to default or other routers).
-        elif 'business_companies' not in [obj1._meta.app_label, obj2._meta.app_label]:
+        # No opinion if neither object is in this app (defer to default or other routers).
+        elif 'business_companies' not in [
+                obj1._meta.app_label, obj2._meta.app_label
+        ]:
             return None
+        # Allow for auth for the historical records which track
+        # which user does an action
+        elif 'business_companies' in [
+                obj1._meta.app_label, obj2._meta.app_label
+        ] and 'auth' in [obj1._meta.app_label, obj2._meta.app_label]:
+            return True
 
         # Block relationship if one object is in the Example app and the other isn't.
         return False
