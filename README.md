@@ -2,6 +2,21 @@
 
 A Django-powered interface for newsroom data at the Star Tribune. Used for internal purposes.
 
+## Data management
+
+Data management happens through the Django Admin, which is at `/admin/`.
+
+## API
+
+An API has been exposed for each model. Each request requires a `username` and `api-key`.
+
+- `/api/v01/company_details/`: Custom endpoint for Companies and their connected records. Note that these are slow endpoints.
+  - `/api/v01/company_details/?coid=1234&limit=100&username=XXXXXX&api_key=XXXXXX`
+  - Use the custom filter `finance_publishyear` to get companies that have a Finance record for that year. For example:
+    - `/api/v01/company_details/?finance_publishyear=2018&limit=100&username=XXXXXX&api_key=XXXXXX`
+  - Use the custom filter `nonprofit_finance_publishyear` to get companies that have a Finance record for that year. For example:
+    - `/api/v01/company_details/?nonprofit_finance_publishyear=2017&limit=10&username=XXXXXX&api_key=XXXXXX`
+
 ## Development
 
 Note that you can use Docker for local development as well; see section below.

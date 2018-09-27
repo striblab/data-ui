@@ -625,7 +625,8 @@ class NonprofitFinances(BaseModel):
         on_delete=models.CASCADE,
         verbose_name='Company',
         help_text='Company associated with this record.',
-        db_column='COID')
+        db_column='COID',
+        related_name='nonprofit_finances_company')
     added = models.DateField(
         db_column='Added',
         verbose_name='Added',
@@ -745,7 +746,8 @@ class NonprofitSalary(BaseModel):
         verbose_name='Officer ID',
         help_text=
         'The officer that this data is for.',
-        db_column='OfficerID')
+        db_column='OfficerID',
+        related_name='nonprofit_officer')
     added = models.DateField(
         verbose_name='Added',
         help_text='Date when this record was added.',
