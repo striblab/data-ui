@@ -21,7 +21,16 @@ class CompanyResource(ModelResource):
             'name': ALL,
             'companytype': ALL,
             'category': ALL,
-            'dropped': ALL
+            'dropped': ALL,
+            'contactemail': ALL,
+            'created_date': ALL,
+            'stocksymbol': ALL,
+            'city': ALL,
+            'contact': ALL,
+            'state': ALL,
+            'modified_date': ALL,
+            'zip': ALL,
+            'added': ALL
         }
         allowed_methods = ['get']
         authentication = ApiKeyAuthentication()
@@ -226,7 +235,16 @@ class CompanyDetailsResource(ModelResource):
             'name': ALL,
             'companytype': ALL,
             'category': ALL,
-            'dropped': ALL
+            'dropped': ALL,
+            'contactemail': ALL,
+            'created_date': ALL,
+            'stocksymbol': ALL,
+            'city': ALL,
+            'contact': ALL,
+            'state': ALL,
+            'modified_date': ALL,
+            'zip': ALL,
+            'added': ALL
         }
         allowed_methods = ['get']
         authentication = ApiKeyAuthentication()
