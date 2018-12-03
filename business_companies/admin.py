@@ -54,6 +54,13 @@ class OfficerSalaryInline(admin.TabularInline):
     fields = ('publishyear', 'title', 'salary', 'total')
 
 
+class NonprofitSalaryInline(admin.TabularInline):
+    model = NonprofitSalary
+    extra = 0
+    show_change_link = True
+    fields = ('publishyear', 'title', 'salary', 'total')
+
+
 # Customize main admin interface for Company
 @admin.register(Company)
 class CompanyAdmin(SimpleHistoryAdmin):
@@ -190,7 +197,7 @@ class OfficerAdmin(SimpleHistoryAdmin):
     list_filter = ('dropped', )
     search_fields = ['id', 'coid__name', 'last', 'first']
     autocomplete_fields = ['coid']
-    inlines = [OfficerSalaryInline]
+    inlines = [OfficerSalaryInline, NonprofitSalaryInline]
     readonly_fields = ('id', 'created_date', 'modified_date')
     fieldsets = (
         (None, {
