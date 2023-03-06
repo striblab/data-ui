@@ -51,7 +51,7 @@ class OfficerSalaryInline(admin.TabularInline):
     model = OfficerSalary
     extra = 0
     show_change_link = True
-    fields = ('publishyear', 'title', 'salary', 'total')
+    fields = ('publishyear', 'title', 'salary', 'customrank', 'total')
 
 
 class NonprofitSalaryInline(admin.TabularInline):

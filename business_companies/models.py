@@ -1116,7 +1116,13 @@ class OfficerSalary(BaseModel):
         db_column='Notes',
         blank=True,
         null=True)
-
+    customrank = models.IntegerField(
+        verbose_name='Custom rank',
+        help_text='Override the default ranking for the year.  Overall, this is helpful for previous years, as data can get updated and rankings can change.',
+        db_column='CustomRank',
+        blank=True,
+        null=True)
+ 
     history = HistoricalRecords()
 
     def __str__(self):
