@@ -16,10 +16,14 @@ uwsgi = "*"
 django-tastypie = "*"
 django-debug-toolbar = "*"
 pylint = "*"
+zappa = "*"
+whitenoise = "*"
+pymysql = "*"
 
 [dev-packages]
 pylint = "*"
 yapf = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.12"
+python_specific_version = "3.12.2"

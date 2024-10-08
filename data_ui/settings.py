@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import environ
+import pymysql
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,6 +60,7 @@ if env('DEBUG_TOOLBAR'):
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,6 +96,11 @@ WSGI_APPLICATION = 'data_ui.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 DATABASES = {'default': env.db('DEFAULT_DB_URI')}
 DATABASES['datadrop_business'] = env.db('DATADROP_BUSINESS_DB_URI')
+
+# Fake PyMySQL's version and install as MySQLdb
+# https://adamj.eu/tech/2020/02/04/how-to-use-pymysql-with-django/
+pymysql.version_info = (1, 4, 3, "final", 0)
+pymysql.install_as_MySQLdb()
 
 DATABASE_ROUTERS = [
     'business_companies.db.routers.BusinessCompaniesRouter',
@@ -139,5 +146,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = env('STATIC_URL')
 STATIC_ROOT = env('STATIC_ROOT')
+WHITENOISE_STATIC_PREFIX = '/static/'
 
 INTERNAL_IPS = ['127.0.0.1']

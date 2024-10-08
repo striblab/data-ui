@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.urls import include, re_path
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie.authorization import DjangoAuthorization
 from tastypie.authentication import ApiKeyAuthentication
