@@ -1,30 +1,23 @@
 {
-    "dev": {
-        "django_settings": "data_ui.settings",
-        "exclude": [
-            "boto3",
-            "dateutil",
-            "botocore",
-            "s3transfer",
-            "concurrent"
-        ],
-        "profile_name": "newsroom-aws",
-        "project_name": "dataui",
-        "runtime": "python3.12",
-        "s3_bucket": "zappa-ya4h3td31"
-    },
-    "prod": {
-        "django_settings": "data_ui.settings",
-        "exclude": [
-            "boto3",
-            "dateutil",
-            "botocore",
-            "s3transfer",
-            "concurrent"
-        ],
-        "profile_name": "newsroom-aws",
-        "project_name": "dataui",
-        "runtime": "python3.12",
-        "s3_bucket": "zappa-ya4h3td31"   
-    }
+  "dev": {
+    "django_settings": "data_ui.settings",
+    "exclude": ["boto3", "dateutil", "botocore", "s3transfer", "concurrent"],
+    "profile_name": "newsroom-aws",
+    "project_name": "dataui",
+    "runtime": "python3.12",
+    "s3_bucket": "zappa-ya4h3td31",
+    "memory_size": 1024,
+    "timeout_seconds": 300,
+    "keep_warm": false
+  },
+  "prod": {
+    "django_settings": "data_ui.settings",
+    "exclude": ["boto3", "dateutil", "botocore", "s3transfer", "concurrent"],
+    "profile_name": "newsroom-aws",
+    "project_name": "dataui",
+    "runtime": "python3.12",
+    "s3_bucket": "zappa-ya4h3td31",
+    "memory_size": 1024,
+    "timeout_seconds": 300
+  }
 }
