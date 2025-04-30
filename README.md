@@ -69,31 +69,27 @@ For each dataset, we make a new Django "app". For instance, say we have a campai
 
 ## Deployment
 
-Deployment is managed with Docker.
-
-### Prerequisites
-
-- Install Docker on your system.
-- Install `docker-compose`` on your system.
+The app is deployed "serverless" style to AWS Lambda using the
+[Zappa library](https://github.com/zappa/Zappa).
 
 ### Settings
 
-See settings above. Suggested to use a `.env` file.
+See settings above. Env variables need to be set in the configuration
+tab of the Lambda function. Additionally, settings specific to the Lambda
+functions can be found in `zappa_settings.json`.
 
-### Build and run
+### Deploy
 
-- `docker-compose up -d`
-  - Note that this command will end quickly, but it will take a moment for the services to be available.
+To deploy the current version of the app to Zappa, run
 
-Some helpful commands
+```
+zappa update <stage name>
+```
 
-- To see what is running: `docker ps`
-- To see what images are available: `docker-compose images`
-- To manually shut down: `docker-compose down`
-- To rebuild image: `docker-compose build --no-cache`
+We currently have `dev` and `prod` stages.
 
-### Admin user
+To create a new stage, add it to `zappa_setting.json` and run
 
-To create the first admin user, you will need to connect to the Docker image.
-
-1.  `docker-compose run web python manage.py createsuperuser`
+```
+zappa deploy <stage name>
+```
