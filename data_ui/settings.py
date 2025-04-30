@@ -22,80 +22,81 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
     DEBUG=(bool, False),
     DEBUG_TOOLBAR=(bool, False),
-    SECRET_KEY=(str, '!=%!i_1n@y4=b8)^!rbn+x^(5coz1li!86n^hbg2=^3pzoi34z'),
-    DEFAULT_DB_URI=(str, 'sqlite:///{}'.format(
-        os.path.join(BASE_DIR, 'db.sqlite3'))),
-    TIME_ZONE=(str, 'America/Chicago'),
-    STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static-assets')),
+    SECRET_KEY=(str, "!=%!i_1n@y4=b8)^!rbn+x^(5coz1li!86n^hbg2=^3pzoi34z"),
+    DEFAULT_DB_URI=(str, "sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3"))),
+    TIME_ZONE=(str, "America/Chicago"),
+    STATIC_ROOT=(str, os.path.join(BASE_DIR, "static-assets")),
     ALLOWED_HOSTS=(list, []),
-    STATIC_URL=(str, '/static/'))
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+    STATIC_URL=(str, "/static/"),
+)
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'simple_history',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "simple_history",
     #'import_export',
-    'tastypie',
-    'business_companies.apps.BusinessCompaniesConfig',
+    "tastypie",
+    "business_companies.apps.BusinessCompaniesConfig",
 ]
-if env('DEBUG_TOOLBAR'):
-    INSTALLED_APPS += ('debug_toolbar', )
+if env("DEBUG_TOOLBAR"):
+    INSTALLED_APPS += ("debug_toolbar",)
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'simple_history.middleware.HistoryRequestMiddleware',
+    "django.middleware.gzip.GZipMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
-if env('DEBUG_TOOLBAR'):
-    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+if env("DEBUG_TOOLBAR"):
+    MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
 
-ROOT_URLCONF = 'data_ui.urls'
+ROOT_URLCONF = "data_ui.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'data_ui.wsgi.application'
+WSGI_APPLICATION = "data_ui.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASES = {'default': env.db('DEFAULT_DB_URI')}
-DATABASES['datadrop_business'] = env.db('DATADROP_BUSINESS_DB_URI')
+DATABASES = {"default": env.db("DEFAULT_DB_URI")}
+DATABASES["datadrop_business"] = env.db("DATADROP_BUSINESS_DB_URI")
 
 # Fake PyMySQL's version and install as MySQLdb
 # https://adamj.eu/tech/2020/02/04/how-to-use-pymysql-with-django/
@@ -103,7 +104,7 @@ pymysql.version_info = (1, 4, 3, "final", 0)
 pymysql.install_as_MySQLdb()
 
 DATABASE_ROUTERS = [
-    'business_companies.db.routers.BusinessCompaniesRouter',
+    "business_companies.db.routers.BusinessCompaniesRouter",
 ]
 
 # Password validation
@@ -111,30 +112,26 @@ DATABASE_ROUTERS = [
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-#TIME_ZONE = 'UTC'
-TIME_ZONE = env('TIME_ZONE')
+# TIME_ZONE = 'UTC'
+TIME_ZONE = env("TIME_ZONE")
 
 USE_I18N = True
 
@@ -144,8 +141,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-STATIC_URL = env('STATIC_URL')
-STATIC_ROOT = env('STATIC_ROOT')
-WHITENOISE_STATIC_PREFIX = '/static/'
+STATIC_URL = env("STATIC_URL")
+STATIC_ROOT = env("STATIC_ROOT")
+WHITENOISE_STATIC_PREFIX = "/static/"
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ["127.0.0.1"]
