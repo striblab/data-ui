@@ -8,7 +8,8 @@
     "s3_bucket": "zappa-ya4h3td31",
     "memory_size": 1024,
     "timeout_seconds": 300,
-    "keep_warm": false
+    "keep_warm": false,
+    "aws_region": "us-east-2"
   },
   "prod": {
     "django_settings": "data_ui.settings",
@@ -18,6 +19,7 @@
     "runtime": "python3.12",
     "s3_bucket": "zappa-ya4h3td31",
     "memory_size": 1024,
-    "timeout_seconds": 300
+    "timeout_seconds": 300,
+    "aws_region": "us-east-2"
   }
 }
