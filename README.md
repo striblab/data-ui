@@ -19,14 +19,11 @@ An API has been exposed for each model. Each request requires a `username` and `
 
 ## Development
 
-Note that you can use Docker for local development as well; see section below.
-
 ### Prerequisites
 
-- Python 3.6+
-- [pipenv](https://docs.pipenv.org/)
-  - `brew install pipenv`
-  - Or `pip install pipenv --user`
+- Python 3.12 (pinned in `.python-version`)
+- [uv](https://docs.astral.sh/uv/)
+  - `brew install uv`
 
 ### Settings
 
@@ -35,24 +32,29 @@ Settings that are unique to the environment are managed with environment variabl
 1.  `DEBUG`: `True` or `False`, defaults to false.
     - Have run into issues where the [Debug Toolbar](https://github.com/jazzband/django-debug-toolbar) slows down the page significantly, so this is a separate `DEBUG_TOOLBAR` variable.
 1.  `SECRET_KEY`: Random, unique string
-1.  `DEFAULT_DB_URI`: Databsase URI for the default database that manages users, something like `database-type://user:pass@host:port/database-name`, defaults to a local SQLite file.
-    - If using the Docker deployment, it includes a Postgres instance and sets this variable to that.
-1.  `DATADROP_BUSINESS_DB_URI`: Databsase URI for the business companies database, something like `mysql://user:pass@host:3306/database-name`
-    - If using the Docker deployment locally, you can refer to your local host with: `host.docker.internal`
+1.  `DEFAULT_DB_URI`: Database URI for the default database that manages users, something like `database-type://user:pass@host:port/database-name`, defaults to a local SQLite file.
+1.  `DATADROP_BUSINESS_DB_URI`: Database URI for the business companies database, something like `mysql://user:pass@host:3306/database-name`
 1.  `TIME_ZONE`: Defaults to `America/Chicago`
 1.  `STATIC_ROOT`: Defaults to local `static-assets/` directory.
 
+#### MySQL connections and TLS
+
+The MySQL databases run on AWS RDS (MySQL 8.4), which requires encrypted connections. MySQL connections use TLS and verify the server's certificate against the AWS RDS CA bundle in `data_ui/certs/rds-global-bundle.pem` (see `data_ui/settings.py`).
+
+Because the certificate is checked against the hostname, MySQL URIs must use the RDS endpoint, not a custom DNS alias. For example, use `news-data-cluster.cluster-cgbgcwbxiden.us-east-2.rds.amazonaws.com`, not `news-data.stribapps.com`. Using the alias fails with `certificate verify failed: Hostname mismatch`.
+
+The app talks to MySQL through [PyMySQL](https://github.com/PyMySQL/PyMySQL), a pure-Python driver installed as `MySQLdb`, so no native MySQL client libraries are needed.
+
 ### Environment
 
-1.  `pipenv shell`
-1.  `pipenv install`
-1.  `python manage.py migrate && python manage.py migrate --database=datadrop_business`
-1.  For first time setup, create an admin user: `python manage.py createsuperuser`
-1.  `python manage.py collectstatic`
+1.  `uv sync`
+1.  `uv run python manage.py migrate && uv run python manage.py migrate --database=datadrop_business`
+1.  For first time setup, create an admin user: `uv run python manage.py createsuperuser`
+1.  `uv run python manage.py collectstatic`
 
 ### Running locally
 
-1.  `python manage.py runserver`
+1.  `uv run python manage.py runserver`
 
 - This will start a webserver at [localhost:8000](http://127.0.0.1:8000/).
 
@@ -60,10 +62,10 @@ Settings that are unique to the environment are managed with environment variabl
 
 For each dataset, we make a new Django "app". For instance, say we have a campaign finance database that we want to hook up.
 
-1.  `python manage.py startapp campaign_finance`
+1.  `uv run python manage.py startapp campaign_finance`
     - Creates a new directory for the app with some basics
 1.  Create models based on the database and all the tables in it
-    - `python manage.py inspectdb --database="campaign_finance_db" > campaign_finance/models.py`
+    - `uv run python manage.py inspectdb --database="campaign_finance_db" > campaign_finance/models.py`
     - You can add options to `inspectdb` to only get specific tables.
 1.  ...
 
@@ -83,13 +85,13 @@ functions can be found in `zappa_settings.json`.
 To deploy the current version of the app to Zappa, run
 
 ```
-zappa update <stage name>
+uv run zappa update <stage name>
 ```
 
-We currently have `dev` and `prod` stages.
+We currently have `dev` and `prod` stages, both deployed to `us-east-2` with the `newsroom-aws` AWS profile.
 
-To create a new stage, add it to `zappa_setting.json` and run
+To create a new stage, add it to `zappa_settings.json` and run
 
 ```
-zappa deploy <stage name>
+uv run zappa deploy <stage name>
 ```
