@@ -98,9 +98,17 @@ WSGI_APPLICATION = "data_ui.wsgi.application"
 DATABASES = {"default": env.db("DEFAULT_DB_URI")}
 DATABASES["datadrop_business"] = env.db("DATADROP_BUSINESS_DB_URI")
 
+# RDS MySQL 8.4 enforces require_secure_transport, so connect over TLS and
+# verify the server against the AWS RDS CA bundle.
+# https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html
+RDS_CA_BUNDLE = os.path.join(BASE_DIR, "data_ui", "certs", "rds-global-bundle.pem")
+for db in DATABASES.values():
+    if "mysql" in db["ENGINE"]:
+        db.setdefault("OPTIONS", {})["ssl"] = {"ca": RDS_CA_BUNDLE}
+
 # Fake PyMySQL's version and install as MySQLdb
 # https://adamj.eu/tech/2020/02/04/how-to-use-pymysql-with-django/
-pymysql.version_info = (1, 4, 3, "final", 0)
+pymysql.version_info = (2, 2, 7, "final", 0)
 pymysql.install_as_MySQLdb()
 
 DATABASE_ROUTERS = [
